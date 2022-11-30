@@ -23,17 +23,10 @@ except ValueError:
     print('입력된 값은 오류가 있습니다.')
 
 # 두수의 차
-a = input()
-
-numbers = a.split(' ')
-
-if len(numbers) > 2:
-    print('입력값 오류')
+'''https://www.acmicpc.net/problem/1001'''
 
 try:
-    a = int(numbers[0])
-    b = int(numbers[1])
-
+    a, b = tuple(map(int, input().split(' ')))
     if 0 < a < 10 and 0 < b < 10:
         print(a-b)
 
@@ -42,17 +35,9 @@ except ValueError:
 
 
 # 두수의 곱
-a = input()
-
-numbers = a.split(' ')
-
-if len(numbers) > 2:
-    print('입력값 오류')
-
+'''https://www.acmicpc.net/problem/10998'''
 try:
-    a = int(numbers[0])
-    b = int(numbers[1])
-
+    a, b = tuple(map(int, input().split(' ')))
     if 0 < a < 10 and 0 < b < 10:
         print(a*b)
 
@@ -61,17 +46,9 @@ except ValueError:
 
 
 # 두수의 나눗셈
-a = input()
-
-numbers = a.split(' ')
-
-if len(numbers) > 2:
-    print('입력값 오류')
-
+'''https://www.acmicpc.net/problem/1008'''
 try:
-    a = int(numbers[0])
-    b = int(numbers[1])
-
+    a, b = tuple(map(int, input().split(' ')))
     if 0 < a < 10 and 0 < b < 10:
         print(a/b)
 
@@ -79,18 +56,10 @@ except ValueError:
     print('입력된 값은 오류가 있습니다.')
 
 # 두수의 사칙연산
-
-a = input()
-
-numbers = a.split(' ')
-
-if len(numbers) > 2:
-    print('입력값 오류')
+'''https://www.acmicpc.net/problem/10869'''
 
 try:
-    a = int(numbers[0])
-    b = int(numbers[1])
-
+    a, b = tuple(map(int, input().split(' ')))
     if 0 < a < 10000 and 0 < b < 10000:
         print(a + b)
         print(a - b)

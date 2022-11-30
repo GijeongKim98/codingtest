@@ -151,7 +151,7 @@ try:
     N, K = int(sys.stdin.readline()), int(sys.stdin.readline())
 
     low = 1
-    high = N ** 2
+    high = K
     rlt = 0
 
     while low <= high:
@@ -162,7 +162,7 @@ try:
 
         if count < K:
             low = mid + 1
-        elif count > K:
+        else:
             rlt = mid
             high = mid - 1
 

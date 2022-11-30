@@ -58,7 +58,7 @@ def scalar_product(a, b, __=2):
 
 print(scalar_product([[1,1],[1,0]],[[1],[0]],1))
 '''
-
+'''
 import sys
 N, M, K = tuple(map(int, sys.stdin.readline().split(' ')))
 numbers = [int(sys.stdin.readline()) for _ in range(N)]
@@ -109,3 +109,9 @@ print(f'2~5까지의 구간 합 : {sum_interval(0, 4, 1, 1, 4)}')
 print(f'3번째 값 6으로 변경')
 update(0, 4, 1, 2, 6 - numbers[2])
 print(f'2~5까지의 구간 합(변경후) : {sum_interval(0, 4, 1, 1, 4)}')
+'''
+
+a = 6
+b = 3
+print(f'a = {a}, b = {b}')
+print(f'a/b = {a/b}\na//b = {a//b}')
