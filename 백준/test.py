@@ -110,8 +110,28 @@ print(f'3번째 값 6으로 변경')
 update(0, 4, 1, 2, 6 - numbers[2])
 print(f'2~5까지의 구간 합(변경후) : {sum_interval(0, 4, 1, 1, 4)}')
 '''
-
+'''
 a = 6
 b = 3
 print(f'a = {a}, b = {b}')
 print(f'a/b = {a/b}\na//b = {a//b}')
+'''
+
+list_ = [0,1,3,5,7,9,11]
+
+
+def binary_search(k):
+    low, high = 1, len(list_) - 1
+    while low <= high:
+        mid = (low + high) // 2
+        if list_[mid] == k:
+            return mid
+
+        if list_[mid] < k:
+            low = mid + 1
+        else:
+            high = mid - 1
+    return low
+
+
+print(binary_search(5))

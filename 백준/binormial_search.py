@@ -145,7 +145,7 @@ except ValueError or IndexError:
 # 이때 m의 minimum 값을 구하자
 
 '''https://www.acmicpc.net/problem/1300'''
-
+'''
 import sys
 try:
     N, K = int(sys.stdin.readline()), int(sys.stdin.readline())
@@ -170,3 +170,41 @@ try:
 except ValueError:
     print('Input Error')
 
+'''
+# 가장 긴 증가하는 부분수열 2
+'''https://www.acmicpc.net/problem/12015'''
+
+# [1,3,5,7,9,11]에서 value가 10 이면 [1,3,5,7,9,10]으로 변경가능
+
+# [1,3,5,7,9,11]에서 value가 8 이면 [1,3,5,7,8,11]으로 변경가능
+
+import sys
+try:
+    N = int(sys.stdin.readline())
+    arr = list(map(int, sys.stdin.readline().split(' ')))
+
+    list_ = [0]
+
+    def binary_search(k):
+        low, high = 1, len(list_)-1
+        while low <= high:
+            mid = (low+high) // 2
+            if list_[mid] == k:
+                return mid
+
+            if list_[mid] < k:
+                low = mid + 1
+            else:
+                high = mid - 1
+        return low
+
+    for number in arr:
+        if list_[-1] < number:
+            list_.append(number)
+        elif list_[-1] > number:
+            idx = binary_search(number)
+            list_[idx] = number
+
+    print(len(list_)-1)
+except ValueError or IndexError:
+    print('Input Error')
