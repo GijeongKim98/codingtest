@@ -669,7 +669,7 @@ try:
     N = int(input())
     if 1 <= N <= 100000:
         list_ = []
-        for i in range(N):
+        for i in range(N): 
             l = input().split(' ')
             tup_ = int(l[0]), l[1]
 

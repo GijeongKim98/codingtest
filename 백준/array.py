@@ -190,3 +190,18 @@ try:
 except ValueError or IndexError:
     print('Input Error')
 
+# 이차원 배열
+
+# 행렬 덧셈
+
+num = int(input()) * int(input()) * int(input())
+
+str_ = str(num)
+
+for i in range(10):
+    num = 0
+    for c in str_:
+        if str(i) == c:
+            num += 1
+
+    print(num)

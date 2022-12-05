@@ -169,7 +169,7 @@ except ValueError:
 
 # 스택 수열
 '''https://www.acmicpc.net/problem/1874'''
-
+'''
 import sys
 try:
     n = int(sys.stdin.readline())
@@ -196,4 +196,30 @@ try:
             print(char)
 
 except ValueError:
+    print('Input Error')
+
+'''
+# 히스토그램
+'''https://www.acmicpc.net/problem/1725'''
+
+import sys
+try:
+    n = int(sys.stdin.readline())
+    numbers = [int(sys.stdin.readline()) for _ in range(n)]
+    stack_ = []
+    i = 0
+    max_area = 0
+    while i < n:
+        while stack_ and numbers[stack_[-1]] > numbers[i]:
+            height = numbers[stack_.pop()]
+            width = (i if not stack_ else i - stack_[-1] - 1)
+            max_area = max(max_area, height*width)
+        stack_.append(i)
+        i+=1
+    while stack_:
+        height = numbers[stack_.pop()]
+        width = (i if not stack_ else i - stack_[-1] - 1)
+        max_area = max(max_area, height*width)
+    print(max_area)
+except ValueError or IndexError:
     print('Input Error')
