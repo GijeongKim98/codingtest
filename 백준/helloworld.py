@@ -3,7 +3,7 @@ print('Hello World!')
 
 # We love krill
 print('강한친구 대한육군\n강한친구 대한육군')
-
+'''
 # 두수의 합
 a = input()
 
@@ -21,10 +21,10 @@ try:
 
 except ValueError:
     print('입력된 값은 오류가 있습니다.')
-
+'''
 # 두수의 차
 '''https://www.acmicpc.net/problem/1001'''
-
+'''
 try:
     a, b = tuple(map(int, input().split(' ')))
     if 0 < a < 10 and 0 < b < 10:
@@ -32,11 +32,11 @@ try:
 
 except ValueError:
     print('입력된 값은 오류가 있습니다.')
-
+'''
 
 # 두수의 곱
 '''https://www.acmicpc.net/problem/10998'''
-try:
+'''try:
     a, b = tuple(map(int, input().split(' ')))
     if 0 < a < 10 and 0 < b < 10:
         print(a*b)
@@ -46,7 +46,9 @@ except ValueError:
 
 
 # 두수의 나눗셈
+'''
 '''https://www.acmicpc.net/problem/1008'''
+'''
 try:
     a, b = tuple(map(int, input().split(' ')))
     if 0 < a < 10 and 0 < b < 10:
@@ -54,10 +56,10 @@ try:
 
 except ValueError:
     print('입력된 값은 오류가 있습니다.')
-
+'''
 # 두수의 사칙연산
 '''https://www.acmicpc.net/problem/10869'''
-
+'''
 try:
     a, b = tuple(map(int, input().split(' ')))
     if 0 < a < 10000 and 0 < b < 10000:
@@ -78,9 +80,9 @@ if 0 < len(str_) < 51 and str_.isalpha() and str_.islower():
     print(str_ + '??!')
 else:
     print('입력값 오류')
-
+'''
 # 1998년생인 내가 태국에서는 2541년생?!
-
+'''
 delta = 2541 - 1998
 
 y = input()
@@ -113,9 +115,9 @@ if len(numbers) == 6:
         print('입력 오류')
 else:
     print('입력 오류')
-
+'''
 # 나머지
-
+'''
 str_ = input()
 
 numbers = str_.split(' ')
@@ -135,8 +137,8 @@ try:
 
 except ValueError:
     print('입력 오류')
-
-
+'''
+'''
 # 곱셈
 
 str1 = input()
@@ -167,7 +169,7 @@ if len(str1) == 3 and len(str2) == 3:
 else:
     print('입력 오류')
 
-
+'''
 # 고양이 출력
 str1 = '\\    /\\'
 str2 = ' )  ( \')'
@@ -209,3 +211,29 @@ print('      |')
 print('      |')
 
 
+# 음계
+'''https://www.acmicpc.net/problem/2920'''
+
+import sys
+try:
+    numbers = list(map(int, sys.stdin.readline().split(' ')))
+
+    def is_ascending():
+        for i in range(8):
+            if i + 1 != numbers[i]:
+                return False
+        return True
+    def is_descending():
+        for j in range(8):
+            if 8 - j != numbers[j]:
+                return False
+        return True
+
+    if is_ascending():
+        print('ascending')
+    elif is_descending():
+        print('descending')
+    else:
+        print('mixed')
+except ValueError or IndexError:
+    print('Input Error')
