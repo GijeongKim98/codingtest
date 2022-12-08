@@ -116,7 +116,7 @@ b = 3
 print(f'a = {a}, b = {b}')
 print(f'a/b = {a/b}\na//b = {a//b}')
 '''
-
+'''
 list_ = [0,1,3,5,7,9,11]
 
 
@@ -135,3 +135,19 @@ def binary_search(k):
 
 
 print(binary_search(5))
+'''
+# 검증수
+'''https://www.acmicpc.net/problem/2475'''
+
+import sys
+
+try:
+    numbers = list(map(int, sys.stdin.readline().split(' ')))
+    sq_num = list(map(lambda x: (x ** 2 % 10), numbers))
+    rlt = 0
+    for sq in sq_num:
+        rlt = (rlt + sq) % 10
+
+    print(rlt)
+except ValueError or IndexError:
+    print('Input Error')

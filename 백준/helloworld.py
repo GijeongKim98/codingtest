@@ -237,3 +237,40 @@ try:
         print('mixed')
 except ValueError or IndexError:
     print('Input Error')
+
+# 검증수
+'''https://www.acmicpc.net/problem/2475'''
+
+import sys
+try:
+    numbers = list(map(int, sys.stdin.readline().split(' ')))
+    sq_num = list(map(lambda x : (x**2 % 10), numbers))
+    rlt = 0
+    for sq in sq_num:
+        rlt = (rlt+sq) % 10
+
+    print(rlt)
+except ValueError or IndexError:
+    print('Input Error')
+
+# N 찍기
+'''https://www.acmicpc.net/problem/2741'''
+
+import sys
+try:
+    n = int(sys.stdin.readline())
+    for i in range(1,n+1):
+        print(i)
+except ValueError:
+    print('Input Error')
+
+# 기찍 N
+'''https://www.acmicpc.net/problem/2742'''
+
+import sys
+try:
+    n = int(sys.stdin.readline())
+    for i in range(n,0,-1):
+        print(i)
+except ValueError:
+    print('Input Error')
