@@ -274,3 +274,28 @@ try:
         print(i)
 except ValueError:
     print('Input Error')
+
+# 펜린드롭수
+'''https://www.acmicpc.net/problem/1259'''
+
+import sys
+try:
+    while True:
+        numbers = sys.stdin.readline()
+        if numbers == '0':
+            break
+        len_ = len(numbers) - 1
+        c = 0
+        for i in range(len(numbers)//2):
+            if numbers[i] != numbers[len_-i]:
+                c = 1
+                break
+        if c == 1:
+            print('no')
+        else:
+            print('yes')
+except ValueError or IndexError:
+    print('error')
+
+
+

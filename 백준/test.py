@@ -136,18 +136,24 @@ def binary_search(k):
 
 print(binary_search(5))
 '''
-# 검증수
-'''https://www.acmicpc.net/problem/2475'''
+# 펜린드롭수
+'''https://www.acmicpc.net/problem/1259'''
 
 import sys
-
 try:
-    numbers = list(map(int, sys.stdin.readline().split(' ')))
-    sq_num = list(map(lambda x: (x ** 2 % 10), numbers))
-    rlt = 0
-    for sq in sq_num:
-        rlt = (rlt + sq) % 10
-
-    print(rlt)
+    while True:
+        numbers = sys.stdin.readline().rstrip()
+        if numbers == '0':
+            break
+        len_ = len(numbers) - 1
+        c = 0
+        for i in range(len_+1//2):
+            if numbers[i] != numbers[len_-i]:
+                c = 1
+                break
+        if c == 1:
+            print('no')
+        else:
+            print('yes')
 except ValueError or IndexError:
-    print('Input Error')
+    print('error')
