@@ -136,24 +136,67 @@ def binary_search(k):
 
 print(binary_search(5))
 '''
-# 펜린드롭수
-'''https://www.acmicpc.net/problem/1259'''
 
+# Queue
+class Queue:
+    def __init__(self):
+        self.list_ = []
+        self.tail = -1
+        self.head = -1
+
+    def get_queue(self):
+        return self.list_[self.tail + 1 : self.head]
+
+    def push(self, x):
+        self.list_.append(x)
+        self.head += 1
+
+    def empty(self):
+        if self.head == self.tail:
+            return 1
+        return 0
+
+    def size(self):
+        return self.head - self.tail
+
+    def pop(self):
+        if self.empty():
+            return -1
+        self.tail += 1
+        return self.list_[self.tail]
+
+    def front(self):
+        if self.empty():
+            return -1
+        return self.list_[self.tail+1]
+
+    def back(self):
+        if self.empty():
+            return -1
+        return self.list_[self.head]
+
+
+# 큐
+'''https://www.acmicpc.net/problem/10845'''
 import sys
 try:
-    while True:
-        numbers = sys.stdin.readline().rstrip()
-        if numbers == '0':
-            break
-        len_ = len(numbers) - 1
-        c = 0
-        for i in range(len_+1//2):
-            if numbers[i] != numbers[len_-i]:
-                c = 1
-                break
-        if c == 1:
-            print('no')
+    N = int(sys.stdin.readline())
+    queue = Queue()
+    for _ in range(N):
+        tup_ = tuple(sys.stdin.readline().split(' '))
+        if len(tup_) == 2:
+            queue.push(int(tup_[1]))
         else:
-            print('yes')
+            command = tup_[0].rstrip()
+            if command == 'pop':
+                print(queue.pop())
+            elif command == 'empty':
+                print(queue.empty())
+            elif command == 'size':
+                print(queue.size())
+            elif command == 'back':
+                print(queue.back())
+            elif command == 'front':
+                print(queue.front())
 except ValueError or IndexError:
-    print('error')
+    print('Input Error')

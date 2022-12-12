@@ -432,7 +432,7 @@ except ValueError:
 # 평범한 배낭
 # 주어진 무게를 초과 x,  최대 가치를 원함
 '''https://www.acmicpc.net/problem/12865'''
-
+'''
 try:
     N, K = tuple(map(int, input().split(' ')))
     w, v = [], []
@@ -455,7 +455,42 @@ try:
 except ValueError or IndexError:
     print("Input Error")
 
+'''
+
 # 파일 합치기
+'''https://www.acmicpc.net/problem/11066'''
+
+import sys
+try:
+    T = int(sys.stdin.readline())
+    for testcase in range(T):
+        K = int(sys.stdin.readline())
+        dp_arr = [[0] * (K-1) for _ in range(K-1)]
+
+        weights = list(map(int, sys.stdin.readline().split(' ')))
+
+        # 누적합 구하기
+        prefix_sum = [0]
+        sum_ = 0
+        for w in weights:
+            sum_ += w
+            prefix_sum.append(sum_)
+        # print(prefix_sum)
+
+        for delta in range(K-1):
+            for i in range(K-1-delta):
+                if delta == 0:
+                    dp_arr[i][i] = prefix_sum[i+2] - prefix_sum[i]
+                else:
+                    j = i + delta
+                    min_ = dp_arr[i][j-1]
+                    for k in range(i,j-1):
+                        min_ = (min_ if min_ < dp_arr[i][k] + dp_arr[k+2][j] else dp_arr[i][k] + dp_arr[k+2][j])
+                    dp_arr[i][j] = prefix_sum[j+2] - prefix_sum[i] + min(min_ , dp_arr[i+1][j])
+
+        print(dp_arr[0][K-2])
+except ValueError or IndexError:
+    print('Input Error')
 
 
 
