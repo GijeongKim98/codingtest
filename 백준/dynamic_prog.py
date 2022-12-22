@@ -459,7 +459,7 @@ except ValueError or IndexError:
 
 # 파일 합치기
 '''https://www.acmicpc.net/problem/11066'''
-
+'''
 import sys
 try:
     T = int(sys.stdin.readline())
@@ -491,6 +491,201 @@ try:
         print(dp_arr[0][K-2])
 except ValueError or IndexError:
     print('Input Error')
+'''
+
+
+# 행렬 곱셈 순서
+'''https://www.acmicpc.net/problem/11049'''
+'''
+import sys
+try:
+    N = int(sys.stdin.readline())
+    d = []
+    for i in range(N):
+        list_ = list(map(int, sys.stdin.readline().split(' ')))
+        if i == 0:
+            d += list_
+        else:
+            d.append(list_[1])
+
+    # print(d)
+
+    dp = [[0] * N for _ in range(N)]
+
+    for delta in range(1,N):
+        for i in range(N-delta):
+            j = i + delta
+            min_ = dp[i][i] + dp[i+1][j] + d[i]*d[i+1]*d[j+1]
+            for k in range(i+1,j):
+                ops = dp[i][k] + dp[k+1][j] + d[i]*d[k+1]*d[j+1]
+                min_ = (min_ if min_ < ops else ops)
+
+            dp[i][j] = min_
+    print(dp[0][N-1])
+
+except ValueError or IndexError:
+    print('Input Error')
+'''
+
+# 내리막 길
+'''https://www.acmicpc.net/problem/1520'''
+'''
+import sys
+try:
+    n, m = tuple(map(int, sys.stdin.readline().split(' ')))
+    graph_ = [list(map(int,sys.stdin.readline().split(' '))) for _ in range(n)]
+
+    # 방문 여부, 몇개의 경로가 있는지 파악하기 위한 dp 배열
+    dp_arr = [[-1] * m for __ in range(n)]
+    dp_arr[n-1][m-1] = 1
+
+
+    # dfs 함수
+    def dfs(x, y):
+        if dp_arr[y][x] > 0 :
+            return dp_arr[y][x]
+        elif dp_arr[y][x] == -1:
+            dp_arr[y][x] = 0
+
+            if y > 0 and graph_[y][x] > graph_[y-1][x]:
+                dp_arr[y][x] += dfs(x, y-1)
+            if x > 0 and graph_[y][x] > graph_[y][x-1]:
+                dp_arr[y][x] += dfs(x-1,y)
+            if y < n-1 and graph_[y][x] > graph_[y+1][x]:
+                dp_arr[y][x] += dfs(x,y+1)
+            if x < m-1 and graph_[y][x] > graph_[y][x+1]:
+                dp_arr[y][x] += dfs(x+1,y)
+        ''''''
+        for l in dp_arr:
+            print(l)
+        print('=================')
+        '''''''
+        return dp_arr[y][x]
+
+    print(dfs(0,0))
+    # print(dp_arr[0][0])
+except ValueError or IndexError:
+    print('Input Error')
+'''
+
+
+# 양팔 저울
+'''https://www.acmicpc.net/problem/2629'''
+# 참고
+'''https://my-coding-notes.tistory.com/157'''
+
+
+# k번째 추에 대한 경우는 3가지 존재
+# i : k번째 추를 더한다
+# ii : k번째 추를 뺸다
+# iii : k번째 추를 사용하지 않는다.
+
+# 재귀 함수를 활용
+'''
+import sys
+try:
+    n = int(sys.stdin.readline()) # 추의 개수
+    w = list(map(int, sys.stdin.readline().split(' '))) # 추의 무게들
+    m = int(sys.stdin.readline()) # 확인할 개수
+    list_ = list(map(int, sys.stdin.readline().split(' '))) # 확인할 무게들
+
+    # dp 배열 구성
+    dp = [[0 for _ in range((i+1) * 500 + 1)] for i in range(n+1)]
+
+    # 가능한 경우 찾기
+    def func_(count, weight):
+        if count > n:
+            return
+        if dp[count][weight] == 1:
+            return
+        dp[count][weight] = 1
+
+        func_(count+1, weight + w[count-1])
+        func_(count+1, abs(weight - w[count-1]))
+        func_(count+1, weight)
+
+    func_(0,0)
+
+    for number in list_:
+        if number > 15000:
+            print('N', end = ' ')
+        elif dp[n][number] == 1:
+            print('Y', end = ' ')
+        else:
+            print('N', end = ' ')
+
+except ValueError or IndexError:
+    print('Input Error')
+'''
+
+# 동전 1
+'''https://www.acmicpc.net/problem/2293'''
+'''
+# 동전 종류 n개 // 원하는 가치 : k원 => 출력 : 경우의 수
+# 관계식 : dp[m] += dp[m - coins[i]], if m >= coins[i]
+
+
+import sys
+try:
+    n, k = map(int,sys.stdin.readline().split(' '))
+    coins = [int(sys.stdin.readline()) for _ in range(n)]
+
+    dp = [1] + [0] * k
+    for coin in coins:
+        for m in range(coin,k+1):
+            dp[m] += dp[m - coin]
+
+    print(dp[k])
+
+except ValueError or IndexError:
+    print('Input Error')
+
+'''
+# 앱
+# 배낭 문제 변형 문제
+# 정해진 메모리로 최소의 비용을 구하는 문제
+# 비용이 정해졌을 때 만족하는 메모리 => 최소의 비용 찾기
+'''https://www.acmicpc.net/problem/7579'''
+
+import sys
+try:
+    N, M = tuple(map(int, sys.stdin.readline().split(' ')))
+    weight = list(map(int, sys.stdin.readline().split(' ')))
+    cost = list(map(int, sys.stdin.readline().split(' ')))
+
+    max_cost = sum(cost)
+
+    # dp 배열 초기화
+    dp = [[0] * (max_cost+1) for _ in range(N)]
+
+    for k in range(cost[0], max_cost + 1):
+        dp[0][k] = weight[0]
+
+    for i in range(1,N-1):
+        for j in range(cost[i]):
+            dp[i][j] = dp[i-1][j]
+        for j in range(cost[i], max_cost+1):
+            dp[i][j] = max(dp[i-1][j], dp[i-1][j-cost[i]] + weight[i])
+    rlt = 0
+    for j in range(max_cost+1):
+        if j < cost[N-1]:
+            dp[N-1][j] = dp[N-2][j]
+        else:
+            dp[N-1][j] = max(dp[N-2][j], dp[N-2][j-cost[N-1]] + weight[N-1])
+        if dp[N-1][j] >= M:
+            rlt = j
+            break
+
+    print(rlt)
+except ValueError or IndexError:
+    print('Input Error')
+
+
+
+
+
+
+
 
 
 
