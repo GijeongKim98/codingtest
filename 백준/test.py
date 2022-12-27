@@ -178,7 +178,7 @@ class Queue:
 
 # 큐
 '''https://www.acmicpc.net/problem/10845'''
-import sys
+'''import sys
 try:
     N = int(sys.stdin.readline())
     queue = Queue()
@@ -200,3 +200,9 @@ try:
                 print(queue.front())
 except ValueError or IndexError:
     print('Input Error')
+
+'''
+
+l = ['1','2','3']
+print(l)
+print("".join(l))

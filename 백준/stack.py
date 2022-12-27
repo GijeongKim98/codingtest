@@ -201,7 +201,7 @@ except ValueError:
 '''
 # 히스토그램
 '''https://www.acmicpc.net/problem/1725'''
-
+'''
 import sys
 try:
     n = int(sys.stdin.readline())
@@ -221,5 +221,39 @@ try:
         width = (i if not stack_ else i - stack_[-1] - 1)
         max_area = max(max_area, height*width)
     print(max_area)
+except ValueError or IndexError:
+    print('Input Error')
+'''
+
+# 문자열 폭발
+'''https://www.acmicpc.net/problem/9935'''
+
+import sys
+try:
+    str_ = sys.stdin.readline().rstrip()
+    bomb = sys.stdin.readline().rstrip()[::-1]
+
+    len_b = len(bomb)
+    stack_ = []
+    k = 0
+
+    for c in str_:
+        stack_.append(c)
+        if len(stack_) >= len_b and c == bomb[0]:
+            for idx, b in enumerate(bomb):
+                # print(stack_[-1 *(idx+1)])
+                if stack_[-1 * (idx+1)] != b:
+                    print(''.join(stack_),end='')
+                    stack_ = []
+                    k = 1
+                    break
+            if stack_:
+                for i in range(len_b):
+                    stack_.pop()
+    if stack_ or k == 1:
+        print(''.join(stack_))
+    else:
+        print('FRULA')
+
 except ValueError or IndexError:
     print('Input Error')
