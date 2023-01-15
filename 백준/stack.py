@@ -227,7 +227,7 @@ except ValueError or IndexError:
 
 # 문자열 폭발
 '''https://www.acmicpc.net/problem/9935'''
-
+'''
 import sys
 try:
     str_ = sys.stdin.readline().rstrip()
@@ -257,3 +257,118 @@ try:
 
 except ValueError or IndexError:
     print('Input Error')
+'''
+
+# 오큰수
+'''https://www.acmicpc.net/problem/17298'''
+'''
+import sys
+try:
+    n = int(sys.stdin.readline())
+    list_ = list(map(int, sys.stdin.readline().split(' ')))
+
+    stack_ = [] # index stack
+    NGE = [-1] * n
+
+    for idx, num in enumerate(list_):
+        while stack_ and list_[stack_[-1]] < num:
+            NGE[stack_.pop()] = num
+        stack_.append(idx)
+        # print(f'NGE = {NGE} // stack_ = {stack_}')
+
+    for i in range(n):
+        print(NGE[i], end=' ')
+except ValueError or IndexError:
+    print('Input Error')
+'''
+
+# 오등큰수
+'''https://www.acmicpc.net/problem/17299'''
+'''
+import sys
+try:
+    n = int(sys.stdin.readline())
+    list_ = list(map(int, sys.stdin.readline().split(' ')))
+    dict_ = dict()
+
+    for number in list_:
+        if number in dict_:
+            dict_[number] += 1
+        else:
+            dict_[number] = 1
+
+    # print(dict_)
+
+    stack_ = []
+    NGF = [-1] * n
+
+    for idx, number in enumerate(list_):
+        while stack_ and dict_[list_[stack_[-1]]] < dict_[number]:
+            NGF[stack_.pop()] = number
+
+        stack_.append(idx)
+        # print(f'stack = {stack_} // NGF = {NGF}')
+    for ngf in NGF:
+        print(ngf, end=' ')
+
+except ValueError or IndexError:
+    print('Input Error')
+'''
+
+# 오아시스 재결합
+'''https://www.acmicpc.net/problem/3015'''
+'''
+import sys
+try:
+    n = int(sys.stdin.readline())
+    list_ = [int(sys.stdin.readline()) for _ in range(n)]
+
+    stack_ = []
+    rlt = 0
+
+    for idx, number in enumerate(list_):
+        while stack_ and list_[stack_[-1]] < number:
+            rlt += idx - stack_.pop()
+            print(f'rlt = {rlt} // idx = {idx}')
+        stack_.append(idx)
+
+    idx = n-1
+    while stack_:
+        rlt += idx - stack_.pop()
+
+    print(rlt)
+except ValueError or IndexError:
+    print('Input Error')
+'''
+
+
+def solution(cap, n, deliveries, pickups):
+    # deliveries와 pickups = stack1, stack2
+    # stack1[-1] > del_ => del_ -= stack2[-1] ; stack1.pop()을 진행
+    # stack2도 마찬가지
+    # 이동거리 => (maximum of length of stacks + 1) * 2
+    # 이동거리의 합이 결과 값
+
+    stack1, stack2 = deliveries[:], pickups[:]
+    sum_ = 0
+    while stack1 or stack2:
+        dis = max(len(stack1), len(stack2)) * 2
+        sum_ += dis
+        num_d, num_p = cap, cap
+
+        while stack1 and stack1[-1] < num_d:
+            num_d -= stack1.pop()
+            print(stack1)
+
+        while stack2 and stack2[-1] < num_p:
+            num_p -= stack2.pop()
+
+        stack1[-1] -= num_d
+        stack2[-1] -= num_p
+        print(f'sum = {sum_} // deliveries = {stack1} // pickups = {stack2}')
+        if sum_ > 20:
+            break
+    answer = sum_
+    return answer
+
+print(solution(4,5,[1,0,3,1,2],[0,3,0,4,0]))

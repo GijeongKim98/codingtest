@@ -202,7 +202,6 @@ except ValueError or IndexError:
     print('Input Error')
 
 '''
-
-l = ['1','2','3']
-print(l)
-print("".join(l))
+a = {0 : []}
+a[0].sort(reverse=True)
+print(a)
