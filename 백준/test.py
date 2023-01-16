@@ -201,7 +201,16 @@ try:
 except ValueError or IndexError:
     print('Input Error')
 
-'''
+
 a = {0 : []}
 a[0].sort(reverse=True)
 print(a)
+'''
+
+def f(i):
+    return a[i]
+
+
+for i in range(3):
+    a = [1, 2, 3, 4]
+    print(f(i))
