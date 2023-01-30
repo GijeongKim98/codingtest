@@ -207,10 +207,44 @@ a[0].sort(reverse=True)
 print(a)
 '''
 
-def f(i):
-    return a[i]
+a = [1,2,3,4]
+for i in range(4):
+    a[i] *= 2
+print(a)
+
+# 억억단을 외우자
+# 1 ~ e 범위에서 약수의 개수가 가장 많은 것을 return한다.
+# 만약 같다면 작은 수를 return 한다.
 
 
-for i in range(3):
-    a = [1, 2, 3, 4]
-    print(f(i))
+def solution(e, starts):
+    def get_count_div(x):
+        if x == 1:
+            return 1
+        i = 1
+        count = 0
+        while i * i < x:
+            if x % i == 0:
+                count += 2
+            i += 1
+        if i * i == x:
+            return count + 1
+        return count
+
+    starts.sort()
+
+    len_s = len(starts)
+    starts_div = [1] * len_s
+
+    for x in range(starts[0], e + 1):
+        count_ = get_count_div(x)
+        # print(f'\nx = {x} // count_ = {count_}')
+        for idx in range(len_s):
+            if starts[idx] > x:
+                break
+            elif starts_div[idx] < count_:
+                starts_div[idx] = count_
+                starts[idx] = x
+            # print((f'\nstarts = {starts}\nstartd = {starts_div}'))
+
+    return starts

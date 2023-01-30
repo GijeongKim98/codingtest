@@ -341,7 +341,7 @@ except ValueError or IndexError:
     print('Input Error')
 '''
 
-
+'''
 def solution(cap, n, deliveries, pickups):
     # deliveries와 pickups = stack1, stack2
     # stack1[-1] > del_ => del_ -= stack2[-1] ; stack1.pop()을 진행
@@ -372,3 +372,108 @@ def solution(cap, n, deliveries, pickups):
     return answer
 
 print(solution(4,5,[1,0,3,1,2],[0,3,0,4,0]))
+'''
+'''import sys
+
+HEIGHT, CNT = 0, 1
+
+
+def solve():
+    stack = []
+    answer = 0
+
+    for h in arr:
+        # stack에 현재 사람보다 작은 사람이 있으면 pop하고 answer에 추가
+        while stack and stack[-1][HEIGHT] < h:
+            answer += stack.pop()[CNT]
+
+        # 스택이 비었으면 현재 사람을 그냥 추가
+        if not stack:
+            stack.append((h, 1))
+            continue
+
+        # 스택이 안 비었고, top과 지금 현재 사람의 키가 같으면
+        if stack[-1][HEIGHT] == h:
+            cnt = stack.pop()[CNT]
+            answer += cnt
+
+            # 현재 같은키보다 왼쪽이 있으므로 -> top과 현재 사람이 볼 수 있으므로 1추가
+            if stack:
+                answer += 1
+
+            # 현재 키인 사람과 같은 사람이 cnt만큼 있으므로, 키 = h, 명수 = cnt+1를 스택에 추가
+            stack.append((h, cnt + 1))
+
+        # 스택이 안비었고, 왼쪽 사람보다 키가 작으므로 그 사람만 볼 수 있음 -> 스택에 현재 키를 넣고, answer에 1추가(왼쪽 사람만 볼 수 있으므로)
+        else:
+            stack.append((h, 1))
+            answer += 1
+
+    return answer
+
+
+N = int(sys.stdin.readline())
+arr = [int(sys.stdin.readline()) for _ in range(N)]
+print(solve())
+'''
+# 오아시스 재결합
+# 처음 틀린 코드
+# 틀린이유 : 인덱스로 접근해서 pop된 사람의 오른쪽 사람들의 숫자를 계산하였다
+# 6, 5, 4, 3, 2, 1 => 5-5 + 5-4 + 5-3 + 5-2 + 5-1 + 5-0 = 15
+# 이런식으로 계산해서 틀렸다.
+# 그래서 다른 사람의 답변을 참고했다.
+# 출처
+'''https://0902.tistory.com/57'''
+# 이 분께서 푼 방법으로 풀어보자.
+# 방법 : 현재 사람을 볼 수 있는 왼쪽 사람 수를 더하자.
+# 스택에 내림차순으로 추가. => 만약 현재 스택[-1] 사람보다 더 큰 사람이 들어오려한다면
+# => 스택.pop() => pop된 사람은 무조건 현재사람을 볼 수 있으므로 answer += (키가같은 사람의 수)
+# 스택이 비어있다면 => 이미 pop된 사람이 존재해서 + 과정을 진행했거나, 처음 한 사람인 경우이다.
+# 같은 값을 스택에 넣을 때는 pop을 해줘 같은 사람의 수를 더해 스택에 넣는다.
+# 이 과정에서는 값이 같은 사람도 현재사람을 볼 수 있으므로 +1 해주고, 더불어서 넣을때 바로 왼쪽 사람도 볼수 있으므로 +1을 해준다.
+# 만약 같지도 않고 비어있지않고 더 작은 사람이라면 스택에 넣고 그 사람은 왼쪽사람만 볼 수 있으므로 +1을 해준다.
+
+
+# 오아시스 재결합
+'''https://www.acmicpc.net/problem/3015'''
+
+import sys
+try:
+    # Input
+    N = int(sys.stdin.readline())
+    heights = [int(sys.stdin.readline()) for _ in range(N)]
+
+    stack_ = []
+    HEIGHT, CNT = 0,1
+    result = 0
+
+    for now_height in heights:
+        while stack_ and stack_[-1][HEIGHT] < now_height:
+            result += stack_.pop()[CNT]
+
+        if not stack_:
+            stack_.append((now_height,1))
+            # print(f'stack : {stack_}\nresult : {result} // now_height : {now_height}')
+            continue
+
+        cnt = 0
+        if stack_[-1][HEIGHT] == now_height:
+            cnt = stack_.pop()[CNT]
+            result += cnt
+
+
+        if stack_ and stack_[-1][HEIGHT] > now_height:
+            result += 1
+
+        stack_.append((now_height, cnt + 1))
+
+
+
+        # print(f'stack : {stack_}\nresult : {result} // now_height : {now_height}')
+
+    print(result)
+except ValueError or IndexError as e:
+    print(e)
+
+
+
