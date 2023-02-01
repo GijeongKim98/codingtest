@@ -80,7 +80,7 @@ except ValueError or IndexError:
 
 # 주유소
 '''https://www.acmicpc.net/problem/13305'''
-import sys
+'''import sys
 try:
     N = int(sys.stdin.readline())
     distance = list(map(int, sys.stdin.readline().split(' ')))
@@ -103,6 +103,125 @@ try:
 
 except ValueError or IndexError:
     print('Input Error')
+'''
 
+# 보물
+'''https://www.acmicpc.net/problem/1026'''
+'''
+import sys
+try:
+    N = int(sys.stdin.readline())
+    A = list(map(int, sys.stdin.readline().split(' ')))
+    B = list(map(int, sys.stdin.readline().split(' ')))
 
+    A.sort()
+    B.sort(reverse=True)
+
+    sum_ = 0
+    for a,b in zip(A,B):
+        sum_ += a*b
+
+    print(sum_)
+
+except ValueError or IndexError as e:
+    print(e)
+
+'''
+
+# 거스름돈
+'''https://www.acmicpc.net/problem/5585'''
+'''
+cashes = [500,100,50,10,5,1]
+try:
+    price = 1000 - int(input())
+    answer = 0
+    for cash in cashes:
+        r_, price = price // cash, price % cash
+        answer += r_
+        if price == 0:
+            break
+    print(answer)
+except ValueError:
+    print('Input Error')
+'''
+
+# 로프
+'''https://www.acmicpc.net/problem/2217'''
+'''
+import sys
+try:
+    N = int(sys.stdin.readline())
+    ropes = [int(sys.stdin.readline()) for _ in range(N)]
+
+    ropes.sort(reverse=True)
+    max_ = 0
+    for idx, rope in enumerate(ropes, start=1):
+        if max_ < idx * rope:
+            max_ = idx * rope
+
+    print(max_)
+except ValueError:
+    print('Input Error')
+'''
+
+# 수들의 합
+'''https://www.acmicpc.net/problem/1789'''
+'''
+import math
+try:
+    S = int(input())
+
+    n = int((math.sqrt(8*S) - 1)/2)
+    n = (1 if n == 0 else n)
+    while True:
+        sum_ = n*(n+1) // 2
+        k = S - sum_
+        if k < 0:
+            n -= 1
+        elif k <= n:
+            break
+        else:
+            n += k // n
+    print(n)
+except ValueError or IndexError or ZeroDivisionError as e:
+    print(e)
+
+'''
+
+# 30
+'''https://www.acmicpc.net/problem/10610'''
+'''
+import sys
+try:
+    list_ = list(map(int,sys.stdin.readline().rstrip()))
+    # print(list_)
+    list_.sort(reverse=True)
+    number = 0
+    for num in list_:
+        number *= 10
+        number += num
+
+    if not number % 30:
+        print(number)
+    else:
+        print(-1)
+except ValueError:
+    print('Input Error')
+
+'''
+
+# 전자레인지
+'''https://www.acmicpc.net/problem/10162'''
+
+try:
+    T = int(input())
+    buttons = [300,60,10]
+    if T % 10:
+        print(-1)
+    else:
+        for button in buttons:
+            q, T = T // button, T % button
+            print(q, end= ' ')
+except ValueError:
+    print('Input Error')
 

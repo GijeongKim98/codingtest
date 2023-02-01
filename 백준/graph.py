@@ -550,7 +550,7 @@ except ValueError or IndexError as e:
 '''
 # 토마토
 '''https://www.acmicpc.net/problem/7576'''
-
+'''
 import sys
 from collections import deque
 
@@ -603,24 +603,247 @@ try:
 
 except ValueError or IndexError as e:
     print(e)
+'''
 
 
+# 연결 요소의 개수
+'''https://www.acmicpc.net/problem/11724'''
+'''
+import sys
+from collections import deque
+try:
+    # Input
+    V, E = map(int, sys.stdin.readline().split(' '))
+    edges = [tuple(map(int, sys.stdin.readline().split(' '))) for _ in range(E)]
+
+    # Initializing graph
+    graph_ = {i:[] for i in range(1,V+1)}
+    for u,v in edges:
+        graph_[u].append(v)
+        graph_[v].append(u)
+
+    # Initializing visited
+    visited = [False] * (V+1)
+
+    # Initializing queue
+    queue = deque()
+
+    # Define BFS
+    def bfs(start):
+        visited[start] = True
+        queue.append(start)
+        while queue:
+            u = queue.popleft()
+            for new_x in graph_[u]:
+                if not visited[new_x]:
+                    visited[new_x] = True
+                    queue.append(new_x)
+
+    count = 0
+    for x in range(1,V+1):
+        if not visited[x]:
+            bfs(x)
+            count += 1
+
+    print(count)
+
+except ValueError or IndexError as e:
+    print(e)
+'''
+# 적록색약
+'''https://www.acmicpc.net/problem/10026'''
+'''
+import sys
+sys.setrecursionlimit(10**6)
+
+try:
+    N = int(sys.stdin.readline())
+    graph_ = [list(sys.stdin.readline()) for _ in range(N)]
+    dx_dys = [(1,0),(0,1),(-1,0),(0,-1)]
+
+    visited = [[0] * N for _ in range(N)]
+
+    def dfs(x,y,start_colors):
+        visited[y][x] = 1
+        for dx, dy in dx_dys:
+            new_x, new_y = x + dx, y + dy
+            if 0 <= new_x < N and 0 <= new_y < N:
+                if not visited[new_y][new_x] and graph_[new_y][new_x] in start_colors:
+                    dfs(new_x,new_y,start_colors)
+
+    count1 = 0
+    count2 = 0
+
+    for y in range(N):
+        for x in range(N):
+            if not visited[y][x]:
+                set_ = set(graph_[y][x])
+                dfs(x,y,set_)
+                count1 += 1
+    set1, set2 = {'R','G'}, {'B'}
+    visited = [[0]*N for _ in range(N)]
+
+    for y in range(N):
+        for x in range(N):
+            if not visited[y][x]:
+                color = graph_[y][x]
+                if color in set2:
+                    dfs(x,y,set2)
+                else:
+                    dfs(x,y,set1)
+                count2 += 1
+
+    print(f'{count1} {count2}')
+except ValueError or IndexError as e:
+    print(e)
+'''
+# 연구소
+'''https://www.acmicpc.net/problem/14502'''
+'''
+# module
+import sys
+from copy import deepcopy as copy
+from collections import deque
+
+# Setting
+sys.setrecursionlimit(10**6)
+
+# Define constant
+VIRUS = 2
+WALL = 1
+EMPTY = 0
+
+try:
+    # Input
+    N, M = map(int, sys.stdin.readline().split(' '))
+    graph_ = [list(map(int, sys.stdin.readline().split(' '))) for _ in range(N)]
+
+    # Initializing virus_list, empty_list
+    virus_list = []
+    empty_list = []
+    for y in range(N):
+        for x in range(M):
+            if graph_[y][x] == VIRUS:
+                virus_list.append((x,y))
+            elif graph_[y][x] == EMPTY:
+                empty_list.append((x,y))
+    # print(empty_list)
+
+    # Initializing Queue
+    queue = deque()
+
+    # Initializing Delta x, y
+    dx_dy = [(1, 0), (-1, 0), (0, 1), (0, -1)]
+
+    # Result
+    result = 0
+
+    # Define BFS
+    def bfs():
+        visited = copy(graph_)
+        for virus_point in virus_list:
+            queue.append(virus_point)
+
+        while queue:
+            u, v = queue.popleft()
+            for dx, dy in dx_dy:
+                new_x, new_y = u+dx, v+dy
+                if 0 <= new_x < M and 0 <= new_y < N and not visited[new_y][new_x]:
+                    visited[new_y][new_x] = VIRUS
+                    queue.append((new_x,new_y))
+
+        global result
+        count = 0
+
+        for l in visited:
+            count += l.count(EMPTY)
+
+        result = max(result, count)
+
+    # Define DFS
+    def dfs(step):
+        if step == 3:
+            bfs()
+            return
+        for x_,y_ in empty_list:
+            if graph_[y_][x_] == EMPTY:
+                graph_[y_][x_] = WALL
+                dfs(step+1)
+                graph_[y_][x_] = EMPTY
+
+    # Create WALL
+    for i in range(2,len(empty_list)):
+        for j in range(1,i):
+            for k in range(j):
+                x1, y1 = empty_list[i]
+                x2, y2 = empty_list[j]
+                x3, y3 = empty_list[k]
+
+                graph_[y1][x1] = WALL
+                graph_[y2][x2] = WALL
+                graph_[y3][x3] = WALL
+
+                bfs()
+
+                graph_[y1][x1] = EMPTY
+                graph_[y2][x2] = EMPTY
+                graph_[y3][x3] = EMPTY
 
 
+    # dfs(0)
+    print(result)
 
+except ValueError or IndexError as e:
+    print(e)
+'''
+# 토마토 3차원
+'''https://www.acmicpc.net/problem/7569'''
 
+from collections import deque
+import sys
+try:
+    # Input
+    M,N,H = map(int,sys.stdin.readline().split(' '))
+    graph_ = [[list(map(int,sys.stdin.readline().split(' '))) for _ in range(N)] for __ in range(H)]
+    # print(graph_)
+    # Initializing Ripe_Tomato
+    ripe_tomato = []
+    for i in range(H):
+        for j in range(N):
+            for k in range(M):
+                if graph_[i][j][k] == 1:
+                    ripe_tomato.append((k,j,i))
+    # dx_dy_dz
+    dx_dy_dz = [(1,0,0),(0,1,0),(0,0,1),(-1,0,0),(0,-1,0),(0,0,-1)]
 
+    # Define bfs
+    def bfs():
+        count = 0
+        while queue:
+            u,v,w = queue.popleft()
+            for dx,dy,dz in dx_dy_dz:
+                new_x, new_y, new_z = u+dx, v+dy, w+dz
+                if 0<= new_x < M and 0 <= new_y < N and 0 <= new_z < H:
+                    if not graph_[new_z][new_y][new_x]:
+                        queue.append((new_x,new_y,new_z))
+                        graph_[new_z][new_y][new_x] = 1 + graph_[w][v][u]
 
+        return count
 
+    queue = deque(ripe_tomato)
 
+    answer = bfs()
 
+    max_ = 1
+    for metrix in graph_:
+        for list_ in metrix:
+            for x in list_:
+                if not x:
+                    print(-1)
+                    sys.exit()
+                max_ = max(max_, x)
 
+    print(max_-1)
 
-
-
-
-
-
-
-
-
+except ValueError or IndexError as e:
+    print(e)

@@ -646,7 +646,7 @@ except ValueError or IndexError:
 # 정해진 메모리로 최소의 비용을 구하는 문제
 # 비용이 정해졌을 때 만족하는 메모리 => 최소의 비용 찾기
 '''https://www.acmicpc.net/problem/7579'''
-
+'''
 import sys
 try:
     N, M = tuple(map(int, sys.stdin.readline().split(' ')))
@@ -680,13 +680,93 @@ try:
 except ValueError or IndexError:
     print('Input Error')
 
+'''
 
 
+# 피보나치함수
+'''https://www.acmicpc.net/problem/1003'''
+'''
+import sys
+try:
+    def list_sum(arr1,arr2):
+        return [arr1[0] + arr2[0], arr1[1] + arr2[1]]
+    # max_size
+    max_size = 40
+    # Initializing DP_Array
+    dp_arr = [[0,0] for _ in range(max_size + 1)]
+    dp_arr[0] = [1,0]
+    dp_arr[1] = [0,1]
+    for idx in range(2, max_size + 1):
+        dp_arr[idx] = list_sum(dp_arr[idx-1], dp_arr[idx-2])
+
+    # Input
+    T = int(sys.stdin.readline())
+    numbers = [int(sys.stdin.readline()) for _ in range(T)]
+
+    for number in numbers:
+        p0, p1 = tuple(dp_arr[number])
+        print(f'{p0} {p1}')
+
+except ValueError or IndexError as e:
+    print(e)
+'''
+
+# 2*n 타일링
+'''https://www.acmicpc.net/problem/11726'''
+'''
+try:
+    n = int(input())
+
+    dp_arr = [0,1,2] + [0] * (n-2)
+
+    for i in range(3, n+1):
+        dp_arr[i] = (dp_arr[i-1] + dp_arr[i-2]) % 10007
+
+    print(dp_arr[n])
+except ValueError as e:
+    print(e)
+'''
 
 
+# 피보나치 수 2
+'''https://www.acmicpc.net/problem/2748'''
+'''
+try:
+    N = int(input())
+    fib = [0,1] + [0] * (N-1)
 
+    for i in range(2,N+1):
+        fib[i] = fib[i-1]+fib[i-2]
 
+    print(fib[N])
+except ValueError as e:
+    print('Input Error')
+'''
+# 2*n 타일링2
+'''https://www.acmicpc.net/problem/11726'''
+'''
+try:
+    n = int(input())
 
+    dp_arr = [0,1,3] + [0] * (n-2)
 
+    for i in range(3, n+1):
+        dp_arr[i] = (dp_arr[i-1] + 2 * dp_arr[i-2]) % 10007
 
+    print(dp_arr[n])
+except ValueError as e:
+    print(e)
+'''
+# 이친수
+'''https://www.acmicpc.net/problem/2193'''
 
+try:
+    N = int(input())
+    dp_ = [1, 1, 1] + [0] * (N-2)
+
+    for k in range(3,N+1):
+        dp_[k] = sum(dp_[:k-1])
+
+    print(dp_[N])
+except ValueError as e:
+    print(e)
