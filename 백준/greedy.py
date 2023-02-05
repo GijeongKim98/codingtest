@@ -212,7 +212,7 @@ except ValueError:
 
 # 전자레인지
 '''https://www.acmicpc.net/problem/10162'''
-
+'''
 try:
     T = int(input())
     buttons = [300,60,10]
@@ -224,4 +224,86 @@ try:
             print(q, end= ' ')
 except ValueError:
     print('Input Error')
+
+'''
+
+# 신입 사원
+'''https://www.acmicpc.net/problem/1946'''
+'''
+import sys
+try:
+    T = int(sys.stdin.readline())
+    for _ in range(T):
+        # Input
+        N = int(sys.stdin.readline())
+        # applicants =[(id, document_grade, interview_grade) for some id in {0,..,N-1}]
+        applicants = [(idx,)+tuple(map(int, sys.stdin.readline().split(' '))) for idx in range(N)]
+
+        # Initializing set
+        set_ = set()
+
+        # sort by document
+        sort_d = sorted(applicants, key=lambda x : x[1])
+        max_i = sort_d[0][2]
+
+        for idx,__,i_g in sort_d[1:]:
+            if max_i < i_g:
+                set_.add(idx)
+            else:
+                max_i = i_g
+
+        # sort by interview
+        sort_i = sorted(applicants, key=lambda x: x[2])
+        max_d = sort_i[0][1]
+
+        for idx, d_g, __ in sort_i[1:]:
+            if max_d < d_g:
+                set_.add(idx)
+            else:
+                max_d = d_g
+
+        # Output
+        print(N-len(set_))
+
+except ValueError or IndexError as e:
+    print(e)
+'''
+
+# 카드 정렬하기
+'''https://www.acmicpc.net/problem/1715'''
+
+import heapq as hq
+import sys
+
+try:
+    N = int(sys.stdin.readline())
+    cards = [int(sys.stdin.readline()) for _ in range(N)]
+
+    # 카드 묶음이 1개인 경우 바로 종료
+    if N <= 1:
+        print(0)
+        sys.exit()
+
+
+    hq.heapify(cards)
+
+    sum_ = 0
+    while True:
+        pop1, pop2 = hq.heappop(cards), hq.heappop(cards)
+        sum_pop = pop1 + pop2
+        sum_ += sum_pop
+
+        if not cards:
+            break
+        hq.heappush(cards,sum_pop)
+
+    print(sum_)
+
+except ValueError or IndexError as e:
+    print(e)
+
+
+
+
+
 

@@ -759,7 +759,7 @@ except ValueError as e:
 '''
 # 이친수
 '''https://www.acmicpc.net/problem/2193'''
-
+'''
 try:
     N = int(input())
     dp_ = [1, 1, 1] + [0] * (N-2)
@@ -770,3 +770,80 @@ try:
     print(dp_[N])
 except ValueError as e:
     print(e)
+'''
+# 퇴사
+'''https://www.acmicpc.net/problem/14501'''
+'''
+import sys
+try:
+    n = int(sys.stdin.readline())
+    time_ = [0]
+    pay_ = [0]
+    for _ in range(n):
+        t_i,p_i = map(int,sys.stdin.readline().split(' '))
+        time_.append(t_i)
+        pay_.append(p_i)
+    dp_arr = [0] * (n+2)
+
+    for idx in range(1,n+1):
+        next_ = time_[idx] + idx
+        if next_ <= n+1:
+            dp_arr[next_] = max(dp_arr[next_], pay_[idx] + dp_arr[idx])
+            for i in range(next_+1,n+2):
+                dp_arr[i] = max(dp_arr[next_], dp_arr[i])
+
+    print(dp_arr[n+1])
+except ValueError or IndexError as e:
+    print(e)
+'''
+# 카드 구매하기
+'''https://www.acmicpc.net/problem/11052'''
+
+# 10
+# 1 1 2 3 5 8 13 21 34 55
+# 1 2 2 3 5 8 13 21 34 55
+# 1 2 3 3 5 8 13 21 34 55
+# 1 2 3 4 5 8 13 21 34 55
+# 1 2 3 4 5 8 13 21 34 55
+# ...
+
+# 4
+# 5 2 8 10
+# 5 10 8 10
+# 5 10 15 10
+# 5 10 15 20
+
+# 4
+# 3 5 15 16
+# 3 6 15 16
+# 3 6 15 16
+# 3 6 15 18
+
+# 5
+# 1 4 5 6 10
+# 1 4 5 6 10
+# 1 4 5 8 10
+# 1 4 5 8 10
+
+import sys
+try:
+    N = int(sys.stdin.readline())
+    dp_arr = list(map(int,sys.stdin.readline().split(' ')))
+
+    for i in range(1,N):
+        max_ = dp_arr[i]
+        for j in range(i//2 + i%2):
+            max_ = max(max_, dp_arr[i-j-1] + dp_arr[j])
+
+        dp_arr[i] = max_
+
+    print(dp_arr[N-1])
+
+except ValueError or IndexError as e:
+    print(e)
+
+
+
+
+
+

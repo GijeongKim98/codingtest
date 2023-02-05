@@ -206,7 +206,7 @@ a = {0 : []}
 a[0].sort(reverse=True)
 print(a)
 '''
-
+'''
 a = [1,2,3,4]
 for i in range(4):
     a[i] *= 2
@@ -249,4 +249,28 @@ def solution(e, starts):
 
     return starts
 
-print(92681)
+print(92681)'''
+
+'''
+for i in range(1,11):
+    print('\n')
+    print(i)
+    for j in range(i//2 + i%2):
+        print(f'j = {j} // k = {i-j-1}')
+'''
+
+R, C = map(int, input().split(' '))
+graph_ = [list(input().rstrip()) for _ in range(R)]
+dx_dy = [(1,0),(0,1),(-1,0),(0,-1)] # -> , <-, 위, 아래
+
+visited = [[0] * C for _ in range(R)]
+
+def dfs(n,x,y):
+    visited[y][x] = 1
+    for dx,dy in dx_dy:
+        new_x, new_y = x+dx, y+dy
+        if 0 <= new_x < C and 0 <= new_y < R and not visited[new_y][new_x]:
+            n = dfs(n+1,new_x,new_y)
+    return n
+
+print(dfs(1,0,0))

@@ -798,7 +798,7 @@ except ValueError or IndexError as e:
 '''
 # 토마토 3차원
 '''https://www.acmicpc.net/problem/7569'''
-
+'''
 from collections import deque
 import sys
 try:
@@ -847,3 +847,93 @@ try:
 
 except ValueError or IndexError as e:
     print(e)
+'''
+# 안전 영역
+'''https://www.acmicpc.net/problem/2468'''
+'''
+import sys
+from collections import deque
+
+try:
+    N = int(sys.stdin.readline())
+    graph_ = [list(map(int,sys.stdin.readline().split(' '))) for _ in range(N)]
+
+    dx_dy = [(1,0),(-1,0),(0,1),(0,-1)]
+
+    def bfs(start,height):
+        x,y = start
+        queue = deque([start])
+        visited[y][x] = True
+
+        while queue:
+            u,v = queue.popleft()
+            for dx, dy in dx_dy:
+                new_x, new_y = u+dx, v+dy
+                if 0 <= new_x < N and 0 <= new_y < N:
+                    if not visited[new_y][new_x] and graph_[new_y][new_x] > height:
+                        queue.append((new_x,new_y))
+                        visited[new_y][new_x] = True
+
+    visited = [[False] * N for _ in range(N)]
+
+    max_ = 0
+    for h in range(101):
+        count = 0
+        for i in range(N):
+            for j in range(N):
+                if not visited[i][j] and graph_[i][j] > h:
+                    bfs((j,i),h)
+                    count += 1
+
+        # print(f'h = {h} // c = {count}')
+
+        if not count:
+            break
+
+        max_ = max(max_,count)
+        visited = [[False] * N for _ in range(N)]
+
+    print(max_)
+
+except ValueError or IndexError as e:
+    print(e)
+'''
+
+# 알파벳
+'''https://www.acmicpc.net/problem/1987'''
+
+import sys
+# sys.setrecursionlimit(10**6)
+
+try:
+    # Input
+    R, C = map(int, sys.stdin.readline().split(' '))
+    ord_A = ord('A')
+    graph_ = [list(map(lambda x : ord(x) - ord_A, list(sys.stdin.readline().rstrip()))) for _ in range(R)]
+
+    visited = [0] * 26
+
+    dx_dy = [(1,0),(0,1),(-1,0),(0,-1)] # -> , <-, 위, 아래
+    cnt = 0
+    visited[graph_[0][0]] =1
+
+    def dfs(n,x,y):
+        for dx,dy in dx_dy:
+            new_x, new_y = x+dx, y+dy
+            if 0 <= new_x < C and 0 <= new_y < R:
+                ord_num = graph_[new_y][new_x]
+                if not visited[ord_num]:
+                    visited[ord_num] = 1
+                    dfs(n+1,new_x,new_y)
+                    visited[ord_num] = 0
+        global cnt
+        cnt = max(cnt, n)
+
+    dfs(1,0,0)
+    print(cnt)
+
+except ValueError or IndexError as e:
+    print(e)
+
+
+
