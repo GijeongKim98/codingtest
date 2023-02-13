@@ -271,7 +271,7 @@ except ValueError or IndexError as e:
 
 # 카드 정렬하기
 '''https://www.acmicpc.net/problem/1715'''
-
+'''
 import heapq as hq
 import sys
 
@@ -301,6 +301,248 @@ try:
 
 except ValueError or IndexError as e:
     print(e)
+'''
+# 뒤집기
+'''https://www.acmicpc.net/problem/1439'''
+'''
+import sys
+try:
+    numbers = list(map(int, list(sys.stdin.readline().rstrip())))
+    number_of_part = [0, 0]
+
+    pre_ = numbers[0]
+    for number in numbers[1:]:
+        if pre_ != number:
+            number_of_part[pre_] += 1
+            pre_ = number
+    number_of_part[pre_] += 1
+
+    print(min(number_of_part))
+
+except ValueError or IndexError as e:
+    print(e)
+
+'''
+
+
+# A -> B
+'''https://www.acmicpc.net/problem/16953'''
+'''
+try:
+    a,b = map(int, input().split(' '))
+    cnt = 0
+    while a < b:
+        if b % 10 == 1:
+            b = b // 10
+        elif not b % 2:
+            b = b // 2
+        else:
+            b = -1
+        cnt += 1
+
+    if a == b:
+        print(cnt+1)
+    else:
+        print(-1)
+
+except ValueError or IndexError as e:
+    print(e)
+'''
+
+# 단어수학
+'''https://www.acmicpc.net/problem/1339'''
+
+from collections import Counter
+import sys
+'''
+try:
+    N = int(sys.stdin.readline())
+    input_list = [list(sys.stdin.readline().rstrip()) for _ in range(N)]
+
+    sort_list = sorted(input_list, key=lambda x : len(x), reverse=True)
+
+    max_digit = len(sort_list[0])
+
+    for idx, list_ in enumerate(sort_list[1:], start=1):
+        sort_list[idx] = [0] * (max_digit - len(list_)) + list_
+
+    # get count
+    count_list = []
+    for i in range(max_digit):
+        list_ = []
+        for j in range(N):
+            list_.append(sort_list[j][i])
+        count_list.append(Counter(list_))
+
+    # number mapping
+    def map_number(index_):
+        len_ = len(count_list[index_])
+        if len_ == 1:
+            return alphabet
+
+    x = 9
+    dict_ = {}
+
+    for idx in range(max_digit):
+        # 0을 제거 숫자 셀 때 필요가 없다.
+        count_list[idx].pop(0, None)
+        items = list(count_list[idx].items())
+        print(items)
+        len_ = len(count_list[idx])
+        if len_ == 1:
+            dict_[items[0][0]] = x
+            x -= 1
+            print(dict_)
+            continue
+
+
+except ValueError or IndexError as e:
+    print(e)
+'''
+
+# 단어 수학
+'''https://www.acmicpc.net/problem/1339'''
+# backtracking
+'''
+import sys
+sys.setrecursionlimit(10**8)
+
+try:
+    # Input
+    N = int(sys.stdin.readline())
+    words = [list(sys.stdin.readline().rstrip()) for _ in range(N)]
+
+    # sort by length
+    words = sorted(words, key=lambda x : len(x), reverse=True)
+
+    # max_digit
+    max_digit = len(words[0])
+
+    # Transformation words
+    words_r = []
+    for word in words:
+        word.reverse()
+        words_r.append(word)
+
+    t_words = []
+    for digit in range(max_digit-1,-1,-1):
+        words_i = []
+        for word in words_r:
+            try:
+                words_i.append(word[digit])
+            except IndexError:
+                break
+        t_words.append(words_i)
+
+
+    # print(t_words)
+
+
+    # alphabets
+    set_ = set()
+    for word in words:
+        set_ = set_.union(set(word))
+    alphabets = list(set_)
+
+    # mapping number
+    dict_map = {alphabet : -1 for alphabet in alphabets}
+
+    # The number of alphabet
+    len_alpha = len(alphabets)
+
+    # calculation
+    def calculation():
+        sum_ = 0
+        for word in words:
+            number = 0
+            # print(f'{word}의 숫자는 ')
+            for idx, alpha in enumerate(word):
+                number += dict_map[alpha]*(10 ** idx)
+                # print(f'idx = {idx}, number = {number}')
+            # print(number)
+            sum_ += number
+        return sum_
+
+
+    # max_sum
+    max_ = 0
+
+    # define dfs()
+    def dfs(number, step):
+        print(dict_map)
+        global max_
+        if number == 9 - len_alpha:
+            cal_ = calculation()
+            max_ = max(max_, cal_)
+            print(max_)
+            return
+        if step >= max_digit:
+            return
+
+        if len(t_words[step]) == 1:
+            if dict_map[t_words[step][0]] == -1:
+                dict_map[t_words[step][0]] = number
+                dfs(number-1, step+1)
+            else:
+                dfs(number,step+1)
+        else:
+            cnt = 0
+            for w in t_words[step]:
+                if dict_map[w] != -1:
+                    cnt+=1
+                else:
+                    dict_map[w] = number
+                    dfs(number-1,step)
+                    dict_map[w] = -1
+            if cnt == len(t_words[step]):
+                dfs(number, step+1)
+
+    dfs(9, 0)
+    # print(dict_map)
+    print(max_)
+except ValueError or IndexError as e:
+    print(e)
+'''
+
+# 단어 수학
+'''https://www.acmicpc.net/problem/1339'''
+
+import sys
+try:
+    N = int(sys.stdin.readline())
+    words = list(sys.stdin.readline().rstrip() for _ in range(N))
+
+    dict_alpha = {}
+
+    for word in words:
+        for digit, alphabet in enumerate(word[::-1]):
+            if alphabet in dict_alpha:
+                dict_alpha[alphabet] += 10**digit
+            else:
+                dict_alpha[alphabet] = 10 ** digit
+
+    # data 확인
+    # print(dict_alpha)
+
+    # sort dict_alpha
+    sorted_alphabet = sorted(dict_alpha.items(), key=lambda x : x[1], reverse=True)
+
+    # data 확인
+    # print(sorted_alphabet)
+
+    # Calculation
+    number = 9
+    answer = 0
+    for alpha, coefficient in sorted_alphabet:
+        answer += number * coefficient
+        number -= 1
+
+    # Output
+    print(answer)
+except ValueError or IndexError as e:
+    print(e)
+
+
 
 
 

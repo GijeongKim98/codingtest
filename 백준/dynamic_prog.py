@@ -824,7 +824,7 @@ except ValueError or IndexError as e:
 # 1 4 5 6 10
 # 1 4 5 8 10
 # 1 4 5 8 10
-
+'''
 import sys
 try:
     N = int(sys.stdin.readline())
@@ -841,6 +841,106 @@ try:
 
 except ValueError or IndexError as e:
     print(e)
+'''
+# 스티커
+'''https://www.acmicpc.net/problem/9465'''
+'''
+import sys
+from copy import deepcopy
+try:
+    T = int(sys.stdin.readline())
+    for _ in range(T):
+        n = int(sys.stdin.readline())
+        dp_arr = [list(map(int, sys.stdin.readline().split(' '))) for _ in range(2)]
+        if n > 1:
+
+
+            for k in range(2):
+                dp_arr[k][1] += dp_arr[(k+1)%2][0]
+
+            for idx in range(2,n):
+                max_0 = max(dp_arr[0][idx-2], dp_arr[0][idx-1])
+                max_1 = max(dp_arr[1][idx-2], dp_arr[1][idx-1])
+
+                dp_arr[0][idx] += max_1
+                dp_arr[1][idx] += max_0
+
+        # print()
+        # for l in dp_arr:
+        #     print(l)
+
+        print(max(dp_arr[0][n-1],dp_arr[1][n-1]))
+
+except ValueError or IndexError as e:
+    print(e)
+'''
+# 오르막수
+'''https://www.acmicpc.net/problem/11057'''
+'''
+try:
+    n = int(input())
+    dp_arr = [[1]*10]+[[0] * 10 for _ in range(n-1)]
+
+    for i in range(1,n):
+        sum_ = 0
+        for idx, num in enumerate(dp_arr[i-1]):
+            sum_ = (sum_ + num % 10007) % 10007
+            dp_arr[i][idx] = sum_
+
+    answer = 0
+    for num in dp_arr[n-1]:
+        answer = (answer + num % 10007) % 10007
+
+    # for list_ in dp_arr:
+    #     print(list_)
+
+    print(answer)
+except ValueError or IndexError as e:
+    print(e)
+'''
+
+#  1,2,3 더하기
+'''https://www.acmicpc.net/problem/9095'''
+'''
+import sys
+try:
+    T = int(sys.stdin.readline())
+
+    # dp_arr
+    dp_arr = [0,1,2,4] + [0] * 7
+    for idx in range(4,11):
+        dp_arr[idx] = dp_arr[idx-3] + dp_arr[idx-2] + dp_arr[idx-1]
+
+    for _ in range(T):
+        n = int(sys.stdin.readline())
+        print(dp_arr[n])
+
+except ValueError or IndexError as e:
+    print(e)
+'''
+
+# 가장 큰 증가 부분 수열
+'''https://www.acmicpc.net/problem/11055'''
+
+import sys
+try:
+    N = int(sys.stdin.readline())
+    numbers = list(map(int, sys.stdin.readline().split(' ')))
+    dp_arr = [0]*N
+    dp_arr[0] = numbers[0]
+
+    for idx, number in enumerate(numbers[1:], start=1):
+        dp_arr[idx] = number
+        for j in range(idx-1,-1,-1):
+            if number > numbers[j]:
+                dp_arr[idx] = max(dp_arr[idx], dp_arr[j] + number)
+
+    # print(dp_arr)
+    print(max(dp_arr))
+except ValueError or IndexError as e:
+    print(e)
+
+
 
 
 

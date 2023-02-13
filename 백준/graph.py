@@ -901,7 +901,7 @@ except ValueError or IndexError as e:
 
 # 알파벳
 '''https://www.acmicpc.net/problem/1987'''
-
+'''
 import sys
 # sys.setrecursionlimit(10**6)
 
@@ -934,6 +934,239 @@ try:
 
 except ValueError or IndexError as e:
     print(e)
+'''
+
+# 섬의 개수
+'''https://www.acmicpc.net/problem/4963'''
+'''
+import sys
+from collections import deque
+
+try:
+    # dx, dy
+    dx_dy = [(1,0),(-1,0),(0,1),(0,-1),(-1,-1),(-1,1),(1,-1),(1,1)]
+
+    # Define BFS()
+    def bfs(start):
+        x, y = start
+        queue = deque([start])
+        graph_[y][x] = 0
+        while queue:
+            u,v = queue.popleft()
+            for dx,dy in dx_dy:
+                new_x, new_y = u+dx, v+dy
+                if 0 <= new_x < n and 0 <= new_y < m and graph_[new_y][new_x]:
+                    queue.append((new_x,new_y))
+                    graph_[new_y][new_x] = 0
+
+
+    while True:
+        # Input
+        n, m = map(int, sys.stdin.readline().split(' '))
+        graph_ = [list(map(int, sys.stdin.readline().split(' '))) for _ in range(m)]
+
+        if not n and not m:
+            break
+
+        # count
+        cnt = 0
+
+        # Searching graph_
+        for i in range(m):
+            for j in range(n):
+                if graph_[i][j]:
+                    bfs((j,i))
+                    cnt += 1
+
+        print(cnt)
+
+except ValueError or IndexError as e:
+    print(e)
+'''
+
+# 트리의 부모 찾기
+'''https://www.acmicpc.net/problem/11725'''
+'''
+import sys
+from collections import deque
+
+try:
+    # Input
+    number_of_vertex = int(sys.stdin.readline())
+    edges = [tuple(map(int, sys.stdin.readline().split(' '))) for _ in range(number_of_vertex-1)]
+
+    # Initializing Graph
+    graph_ = {i : [] for i in range(1, number_of_vertex+1)}
+    for u, v in edges:
+        graph_[u].append(v)
+        graph_[v].append(u)
+
+    # result
+    result = [0] * (number_of_vertex+1)
+
+    # Define bfs()
+    def bfs():
+        queue = deque([1])
+        result[1] = 1
+
+        while queue:
+            x = queue.popleft()
+            for new_x in graph_[x]:
+                if not result[new_x]:
+                    result[new_x] = x
+                    queue.append(new_x)
+
+    # Output
+    bfs()
+    for p in result[2:]:
+        print(p)
+
+except ValueError or IndexError as e:
+    print(e)
+'''
+
+# 숨바꼭질 2
+'''https://www.acmicpc.net/problem/12851'''
+'''
+import sys
+from collections import deque
+try:
+    N, K = map(int, input().split(' '))
+
+    if N >= K:
+        print(N-K)
+        print(1)
+        sys.exit()
+
+    step = [100000] * 100001
+    visited = [0] * 100001
+
+
+    def bfs(start):
+        count = 0
+        queue = deque([start])
+        step[start] = 1
+        min_ = 0
+        while queue:
+            # print(f'queue = {queue}')
+            u = queue.popleft()
+            visited[u] = 1
+            moving = [u-1, u+1, 2*u]
+
+            if count:
+                if step[u] == min_ and K in moving:
+                    count += 1
+
+            else:
+                for new_x in moving:
+                    if new_x == K:
+                        count += 1
+                        min_ = step[u]
+                        # for i, x in enumerate(step[:2*K]):
+                        #     print(f'i = {i} // step = {x}')
+                        break
+                    if 0 <= new_x < 100001 and not visited[new_x]:
+                        if step[new_x] >= step[u] + 1:
+                            step[new_x] = step[u] + 1
+                            queue.append(new_x)
+
+        return min_, count
+
+    # output
+    min_time, cnt = bfs(N)
+    print(f'{min_time}\n{cnt}')
+
+except ValueError or IndexError as e:
+    print(e)
+'''
+
+
+# 경로찾기
+'''https://www.acmicpc.net/problem/11403'''
+'''
+import sys
+from collections import deque
+
+try:
+    N = int(sys.stdin.readline())
+    metric = [list(map(int, sys.stdin.readline().split(' '))) for _ in range(N)]
+
+    graph_ = {i : [] for i in range(N)}
+    for i, list_ in enumerate(metric):
+        for j, exist_edge in enumerate(list_):
+            if exist_edge:
+                graph_[i].append(j)
+
+
+    visited = [0] * N
+    answer = {i : set() for i in range(N)}
+
+    def bfs(start):
+        pop_list = []
+        queue = deque([start])
+        visited[start] = 1
+        while queue:
+            u = queue.popleft()
+            pop_list.append(u)
+            for new_x in graph_[u]:
+                if not visited[new_x]:
+                    for pop_num in pop_list:
+                        answer[pop_num].add(new_x)
+                    visited[new_x] = 1
+                    queue.append(new_x)
+                else:
+                    for pop_num in pop_list:
+                        answer[pop_num].add(new_x)
+                        answer[pop_num] = answer[pop_num].union(answer[new_x])
+
+    for v in range(N):
+        if not visited[v]:
+            bfs(v)
+
+    for set_ in answer.values():
+        for j in range(N):
+            if j in set_:
+                print(1, end = ' ')
+            else:
+                print(0, end = ' ')
+        print()
+
+
+except ValueError or IndexError as e:
+    print(e)
+'''
+
+# Floyd-Warshall Algorithm
+
+import sys
+try:
+    N = int(sys.stdin.readline())
+    graph_ = [list(map(int, sys.stdin.readline().split(' '))) for _ in range(N)]
+
+    for through in range(N): # 거치는 점
+        for start in range(N): # 시작점
+            for end in range(N): # 끝나는 점
+                if not graph_[start][end] and graph_[start][through] and graph_[through][end]:
+                    graph_[start][end] = 1
+
+    for l in graph_:
+        for x in l:
+            print(x, end = ' ')
+        print()
+except ValueError or IndexError:
+    print('Input Error')
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

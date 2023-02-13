@@ -258,7 +258,7 @@ for i in range(1,11):
     for j in range(i//2 + i%2):
         print(f'j = {j} // k = {i-j-1}')
 '''
-
+'''
 R, C = map(int, input().split(' '))
 graph_ = [list(input().rstrip()) for _ in range(R)]
 dx_dy = [(1,0),(0,1),(-1,0),(0,-1)] # -> , <-, 위, 아래
@@ -273,4 +273,39 @@ def dfs(n,x,y):
             n = dfs(n+1,new_x,new_y)
     return n
 
-print(dfs(1,0,0))
+print(dfs(1,0,0))'''
+'''
+sum_ = []
+s_ = 0
+for i in range(11):
+    s_ += i
+    sum_.append(s_)
+
+print(sum_)
+r = 0
+for i, k in enumerate(sum_):
+    r += k
+
+print(r)
+'''
+dict_ = {i : i+1 for i in range(10)}
+print(dict_)
+#del(dict_[-1])
+#print(dict_)
+del(dict_[0])
+print(dict_)
+dict_.pop(0, None)
+print(dict_)
+dict_.pop(0)
+print(dict_)
+dict_.pop(0, None)
+print(dict_)
+dict_.pop(0, None)
+print(dict_)
+dict_.pop(0, None)
+print(dict_)
+dict_.pop(1, None)
+print(dict_)
+
+
+
