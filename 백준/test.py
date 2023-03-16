@@ -287,25 +287,63 @@ for i, k in enumerate(sum_):
     r += k
 
 print(r)
+''''''
+from random import randint
+import heapq
+import time
+
+list_ = []
+list2 = []
+N = 1000000
+for _ in range(N):
+    a = randint(1, N)
+    list_.append(a)
+    list2.append(a)
+start1 = time.time()
+max_heap = []
+for item in list_:
+    heapq.heappush(max_heap, item)
+while max_heap:
+    heapq.heappop(max_heap)
+
+end1 = time.time()
+
+print(f'heappush : {end1 - start1}')
+
+print()
+
+start2 = time.time()
+heapq.heapify(list_)
+while list_:
+    heapq.heappop(list_)
+end2 = time.time()
+print(f'heapify : {end2 - start2}')
+print()
+
+start3 = time.time()
+list2.sort(reverse=True)
+for i in range(N):
+    k = list2[i]
+end3 = time.time()
+print(f'list sort : {end3 - start3}')
 '''
-dict_ = {i : i+1 for i in range(10)}
-print(dict_)
-#del(dict_[-1])
-#print(dict_)
-del(dict_[0])
-print(dict_)
-dict_.pop(0, None)
-print(dict_)
-dict_.pop(0)
-print(dict_)
-dict_.pop(0, None)
-print(dict_)
-dict_.pop(0, None)
-print(dict_)
-dict_.pop(0, None)
-print(dict_)
-dict_.pop(1, None)
-print(dict_)
+# 정사각형
+'''https://www.acmicpc.net/problem/1485'''
 
+import sys
+try:
+    t = int(sys.stdin.readline())
 
+    def distance_(p_i,p_j):
+        return (p_j[0] - p_i[0]) ** 2 + (p_j[1] - p_i[1]) ** 2
 
+    for _ in range(t):
+        points = [tuple(map(int, sys.stdin.readline().split(' '))) for __ in range(4)]
+        sorted_points = sorted(points, key=lambda p : (p[0],p[1]))
+        p1,p2,p3,p4 = sorted_points
+        if distance_(p1,p2) == distance_(p1,p3) and distance_(p1,p4) == distance_(p2,p3):
+            print(1)
+        else:
+            print(0)
+except ValueError or IndexError as e:
+    print(e)

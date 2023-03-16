@@ -1,6 +1,6 @@
 
 # 동전 0
-'''https://www.acmicpc.net/problem/11047'''
+''' https://www.acmicpc.net/problem/11047 '''
 '''
 import sys
 try:
@@ -351,10 +351,10 @@ except ValueError or IndexError as e:
 
 # 단어수학
 '''https://www.acmicpc.net/problem/1339'''
-
+'''
 from collections import Counter
 import sys
-'''
+
 try:
     N = int(sys.stdin.readline())
     input_list = [list(sys.stdin.readline().rstrip()) for _ in range(N)]
@@ -506,7 +506,7 @@ except ValueError or IndexError as e:
 
 # 단어 수학
 '''https://www.acmicpc.net/problem/1339'''
-
+'''
 import sys
 try:
     N = int(sys.stdin.readline())
@@ -541,11 +541,106 @@ try:
     print(answer)
 except ValueError or IndexError as e:
     print(e)
+'''
+# 캠핑
+'''https://www.acmicpc.net/problem/4796'''
+'''
+import sys
+try:
+    c = 1
+    while True:
+        L, P, V = map(int, sys.stdin.readline().split(' '))
+        if not L and not P and not V:
+            break
 
+        if V % P < L:
+            answer = (V//P) * L + V % P
+        else:
+            answer = (V//P) * L + L
+        print(f'Case {c}: {answer}')
+        c += 1
+except ValueError:
+    print('Input Error')
 
+'''
 
+# 보석도둑
+'''https://www.acmicpc.net/problem/1202'''
+'''
+import sys
+import heapq as hq
+try:
+    # Input
+    N, K = map(int, sys.stdin.readline().split(' '))
+    jewels = []
+    for _ in range(N):
+        m, v = map(int, sys.stdin.readline().split(' '))
+        hq.heappush(jewels,(-v,m))
 
+    weights = [int(sys.stdin.readline()) for _ in range(K)]
 
+    # Sorting
+    weights.sort()
+    # jewels.sort(key=lambda x : (x[1],-1 * x[0]), reverse=True)
+
+    # available_bag
+    # available_bags = [True] * K
+
+    # Result
+    result = 0
+
+    # Get Max Value
+    while jewels:
+        v, m = hq.heappop(jewels)
+        for bag, w in enumerate(weights):
+            if m <= w:
+                result -= v
+                weights.pop(bag)
+                break
+
+    print(result)
+
+except ValueError or IndexError as e:
+    print(e)
+'''
+
+# 팰린드롬 만들기
+'''https://www.acmicpc.net/problem/1213'''
+
+import sys
+try:
+    alpha_list = list(sys.stdin.readline().rstrip())
+    # print(alpha_list)
+    len_str = len(alpha_list)
+    dict_ = {}
+    for alpha in alpha_list:
+        if alpha not in dict_:
+            dict_[alpha] = 1
+        else:
+            dict_[alpha] += 1
+
+    count_odd = 0
+    odd_char = None
+    for alpha, cnt in dict_.items():
+        if cnt % 2:
+            count_odd += 1
+            odd_char = alpha
+            if count_odd > 1:
+                print('I\'m Sorry Hansoo')
+                sys.exit()
+    
+    sort_list = sorted(dict_.items(), key = lambda x : ord(x[0]), reverse=True)
+
+    result = (odd_char if odd_char and count_odd else '')
+
+    for alpha, cnt in sort_list:
+        r = cnt // 2
+        result = alpha*r + result + alpha*r
+    
+    print(result)
+    
+except ValueError and IndexError as e:
+    print(e) 
 
 
 

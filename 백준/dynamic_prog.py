@@ -921,7 +921,7 @@ except ValueError or IndexError as e:
 
 # 가장 큰 증가 부분 수열
 '''https://www.acmicpc.net/problem/11055'''
-
+'''
 import sys
 try:
     N = int(sys.stdin.readline())
@@ -939,9 +939,72 @@ try:
     print(max(dp_arr))
 except ValueError or IndexError as e:
     print(e)
+'''
+
+# 제곱수의 합
+'''https://www.acmicpc.net/problem/1699'''
+'''
+try:
+    N = int(input())
+    dp_arr = [i for i in range(N+1)]
+
+    # 제곱수 구하기
+    square_list = []
+    k = 1
+    k_square = 1
+    while k_square <= N:
+        square_list.append(k_square)
+        k += 1
+        k_square = k*k
 
 
+    # 제곱수 항의 개수 구하기
+    for x in range(1,N+1):
+        for square_number in square_list:
+            if square_number <= x:
+                dp_arr[x] = min(dp_arr[x], dp_arr[x-square_number] + 1)
+            else:
+                break
 
+    print(dp_arr[N])
+
+except ValueError:
+    print('Input Error')
+'''
+
+# Four Squares
+'''https://www.acmicpc.net/problem/17626'''
+
+try:
+    # Input
+    N = int(input())
+    
+
+    # Init Squeres Numbers list
+    squere_numbers = [0]
+    i, square_number = 1, 1
+    while square_number <= N:
+        squere_numbers.append(square_number)
+        i += 1
+        square_number = i * i
+
+    # print(square_number)
+
+    # Init DP_arr
+    dp_arr = [i for i in range(N+1)]
+
+    
+    for idx in range(1, N+1):
+        for s_num in squere_numbers:
+            if idx < s_num:
+                break
+            dp_arr[idx] = min(dp_arr[idx - s_num] + 1, dp_arr[idx])
+    
+    # Output
+    print(dp_arr[N])
+
+except ValueError or IndexError as e:
+    print(e)
 
 
 

@@ -1083,7 +1083,7 @@ except ValueError or IndexError as e:
 
 # 경로찾기
 '''https://www.acmicpc.net/problem/11403'''
-'''
+
 import sys
 from collections import deque
 
@@ -1107,7 +1107,8 @@ try:
         visited[start] = 1
         while queue:
             u = queue.popleft()
-            pop_list.append(u)
+            if graph_[u]:
+                pop_list.append(u)
             for new_x in graph_[u]:
                 if not visited[new_x]:
                     for pop_num in pop_list:
@@ -1134,10 +1135,10 @@ try:
 
 except ValueError or IndexError as e:
     print(e)
-'''
+
 
 # Floyd-Warshall Algorithm
-
+'''
 import sys
 try:
     N = int(sys.stdin.readline())
@@ -1155,7 +1156,7 @@ try:
         print()
 except ValueError or IndexError:
     print('Input Error')
-
+'''
 
 
 
