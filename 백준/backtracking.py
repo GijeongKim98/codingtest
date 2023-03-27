@@ -499,9 +499,8 @@ except ValueError or IndexError:
 import sys
 try:
     N = int(input())
-    s_list = []
-    for i in range(N):
-        s_list.append(list(map(int,input().split(' '))))
+    s_list = [list(map(int,sys.stdin.readline().split(' '))) for _ in range(N)]
+
 
     delta = 2000
     visited = [True] + [False] * (N - 1)

@@ -329,7 +329,7 @@ print(f'list sort : {end3 - start3}')
 '''
 # 정사각형
 '''https://www.acmicpc.net/problem/1485'''
-
+'''
 import sys
 try:
     t = int(sys.stdin.readline())
@@ -339,11 +339,97 @@ try:
 
     for _ in range(t):
         points = [tuple(map(int, sys.stdin.readline().split(' '))) for __ in range(4)]
+
         sorted_points = sorted(points, key=lambda p : (p[0],p[1]))
+
         p1,p2,p3,p4 = sorted_points
+
         if distance_(p1,p2) == distance_(p1,p3) and distance_(p1,p4) == distance_(p2,p3):
             print(1)
         else:
             print(0)
+
 except ValueError or IndexError as e:
     print(e)
+
+'''
+# 수열의 합
+'''https://www.acmicpc.net/problem/1024'''
+'''
+import sys
+try:
+    N, L = map(int, input().split(' '))
+    sum_1_l = (L * (L - 1)) // 2
+    rlt = []
+
+    while sum_1_l <= N and L <= 100:
+        if (N - sum_1_l) % L == 0:
+            q = (N - sum_1_l) // L
+            rlt = [x for x in range(q,L+q)]
+            break
+        sum_1_l += L
+        L += 1
+
+    if rlt:
+        print(*rlt)
+    else:
+        print(-1)
+
+except ValueError as e:
+    print(e)
+'''
+
+# 팩토리얼5
+'''https://www.acmicpc.net/problem/1564'''
+'''
+try:
+    N = int(input())
+    rlt = 1
+    for i in range(2,N+1):
+        rlt = (rlt * i)
+        while rlt % 10 == 0:
+            rlt //= 10
+        if (i-1) % 5 == 0:
+            rlt %= 1000000
+        # print(f'{i}! =  {rlt}')
+    rlt %= 100000
+    rlt = str(rlt)
+    len_= len(rlt)
+
+    if len_ < 5:
+        print('0'*(5-len_)+rlt)
+    else:
+        print(rlt)
+
+except ValueError as e:
+    print(e)
+'''
+# 제곱근 작도
+'''https://www.acmicpc.net/problem/5389'''
+
+try:
+    test_case = int(input())
+    for t in range(test_case):
+        n = int(input())
+
+        i = 1
+        x,y = 0,0
+        while i * i <= n:
+            if n % i == 0:
+                p, q = i, n//i
+                if p*q % 2 == 1 or p % 2 == 0 and q % 2 == 0:
+                    x, y = (q-p)//2 , (p+q)//2
+            i += 1
+
+        if y:
+            print(x,y)
+        else:
+            print('IMPOSSIBLE')
+except ValueError as e:
+    print(e)
+
+
+
+
+
+

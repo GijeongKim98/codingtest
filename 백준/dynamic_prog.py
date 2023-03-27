@@ -983,6 +983,7 @@ try:
     # Init Squeres Numbers list
     squere_numbers = [0]
     i, square_number = 1, 1
+
     while square_number <= N:
         squere_numbers.append(square_number)
         i += 1

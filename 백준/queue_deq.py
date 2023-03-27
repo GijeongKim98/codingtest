@@ -282,7 +282,7 @@ except ValueError or IndexError:
 
 # 회전하는 큐
 '''https://www.acmicpc.net/problem/1021'''
-'''
+
 import sys
 from collections import deque
 # deque.rotate(1) : 시계 // # deque.rotate(-1) : 반시계
@@ -308,7 +308,7 @@ try:
     print(rlt)
 except ValueError or IndexError:
     print('Input Error')
-'''
+
 # AC
 '''https://www.acmicpc.net/problem/5430'''
 
@@ -320,7 +320,7 @@ except ValueError or IndexError:
 
 # 출력
 # list
-
+'''
 from collections import deque
 import sys
 
@@ -378,7 +378,7 @@ try:
 except ValueError or IndexError:
     print('Input Error')
 
-
+'''
 
 
 

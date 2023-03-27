@@ -180,7 +180,7 @@ except ValueError or IndexError:
 '''
 # 가운데를 말해요
 '''https://www.acmicpc.net/problem/1655'''
-
+'''
 class TwoHeap:
     def __init__(self):
         self.min_h = [None]
@@ -277,3 +277,33 @@ try:
         # print(f'min_heap = {t_heap.min_h}')
 except ValueError or IndexError:
     print('Input Error')
+'''
+
+# 아이들과 선물 상자
+'''https://www.acmicpc.net/problem/23757'''
+
+import heapq as hq
+import sys
+
+try:
+    N, M = map(int, sys.stdin.readline().split(' '))
+    c_list = list(map(lambda x: -int(x), sys.stdin.readline().split(' ')))
+    w_list = list(map(int, sys.stdin.readline().split(' ')))
+
+    rlt = 1
+    # c_list => max heap
+    hq.heapify(c_list)
+    for w in w_list:
+        pop_number = -hq.heappop(c_list)
+        if pop_number < w:
+            rlt = 0
+            break
+        # -( pop_number - w )을 넣어야 하므로 w-pop_number push
+        hq.heappush(c_list,w-pop_number)
+
+    print(rlt)
+except ValueError or IndexError as e:
+    print(e)
+
+
+
