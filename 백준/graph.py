@@ -1083,7 +1083,7 @@ except ValueError or IndexError as e:
 
 # 경로찾기
 '''https://www.acmicpc.net/problem/11403'''
-
+'''
 import sys
 from collections import deque
 
@@ -1135,7 +1135,7 @@ try:
 
 except ValueError or IndexError as e:
     print(e)
-
+'''
 
 # Floyd-Warshall Algorithm
 '''
@@ -1158,15 +1158,263 @@ except ValueError or IndexError:
     print('Input Error')
 '''
 
+# 영역 구하기
+'''https://www.acmicpc.net/problem/2583'''
 
 
+import sys
+from collections import deque
+'''
+try:
+    # Input
+    M, N, K = map(int, sys.stdin.readline().split(' '))
+
+    # Initailizing graph
+    graph = [[0 for _ in range(N)] for __ in range(M)]
+
+    for k in range(K):
+        x1,y1,x2,y2 = map(int, sys.stdin.readline().split(' '))
+        for y in range(y1,y2):
+            for x in range(x1,x2):
+                graph[y][x] = 1
+    
+    # print(graph)
+    # Initializing Queue
+    queue = deque()
+
+    # dx_dy
+    dx_dy = [(-1,0),(1,0),(0,1),(0,-1)]
+
+    def bfs(start_node):
+        queue.append(start_node)
+        s_x, s_y = start_node
+        graph[s_y][s_x] = 1
+        rlt = 0
+        while queue:
+            u, v = queue.popleft()
+            rlt += 1
+            for dx, dy in dx_dy:
+                new_x, new_y = u+dx, v+dy
+                if (0 <= new_x and new_x < N) and (0 <= new_y and new_y < M) and not graph[new_y][new_x]:
+                    queue.append((new_x, new_y))
+                    graph[new_y][new_x] = 1
+        return rlt
+    
+    rlt_list = []
+
+    for y in range(M):
+        for x in range(N):
+            if not graph[y][x]:
+                rlt_list.append(bfs((x,y))) 
+    
+    rlt_list.sort()
+
+    print(len(rlt_list))
+    print(*rlt_list)
+
+except ValueError or IndexError as e:
+    print(e)
+'''
 
 
+# 점프
+'''https://www.acmicpc.net/problem/1890'''
+'''
+# 시간 초과 코드
+import sys
+sys.setrecursionlimit(10**6)
+
+try:
+    N = int(sys.stdin.readline())
+    graph_ = [list(map(int, sys.stdin.readline().split(' '))) for _ in range(N)]
+
+    # visited = [[0]*N for _ in range(N)]
+    # stack_ = []
+    cnt = 0
+
+    def dfs(x,y):
+        global cnt
+        if N-1 == x and N-1 == y:
+            cnt += 1
+            return
+
+        jump_num = graph_[y][x]
+
+        # 오른쪽
+        if x + jump_num < N:
+            dfs(x+jump_num,y)
+        # 아래
+        if y + jump_num < N:
+            dfs(x, y+ jump_num)
+
+    dfs(0,0)
+    print(cnt)
+except ValueError or IndexError as e:
+    print(e)
+
+'''
+
+# MooTube
+'''https://www.acmicpc.net/problem/15591'''
+'''
+import sys
+from collections import deque
+
+try:
+    # Input N, Q
+    N,Q = map(int,sys.stdin.readline().split(' '))
+    
+    # Initialize Graph
+    graph = {i:[] for i in range(1,N+1)}
+    
+    # Input p,q,r 
+    for _ in range(N-1):
+        p,q,r = map(int,sys.stdin.readline().split(' '))
+        graph[p].append([q,r])
+        graph[q].append([p,r])
+    
+    USADO = [[] for _ in range(N)]
+
+    #print(graph)
+
+    # max_inf
+    inf = 1000000001
+  
+    # get_count_point : bfs
+    def get_count_point(node):
+        visited = [inf for _ in range(N+1)]
+        visited[node] = inf+1
+        queue = deque([node])
+
+        while queue:
+            pop_node = queue.popleft()
+            
+            for new_node, weight in graph[pop_node]:
+                if visited[new_node] == inf:
+                    visited[new_node] = min(weight, visited[pop_node])
+                    queue.append(new_node)
+        # print(visited)
+        USADO[node-1] = visited[1:]
+
+    
+    # result
+    result = []
+    
+
+    for question in range(Q):
+        k, v = map(int, sys.stdin.readline().split(' '))
+        cnt = 0
+        if not USADO[v-1]:
+            get_count_point(v)
+        
+        # print(USADO)
+        
+        for distance in USADO[v-1]:
+            if k <= distance:
+                cnt += 1
+        result.append(cnt-1)
+    
+    # Output
+    for r in result:
+        print(r)
+
+except ValueError or IndexError as e:
+    print(e)
+'''
 
 
+# 스타트 링크
+'''https://www.acmicpc.net/problem/5014'''
+'''
+import sys
+from collections import deque
+try:
+    F, S, G, U, D = map(int, sys.stdin.readline().split(' '))
+
+    if S == G:
+        print(0)
+        sys.exit()
+    
+
+    dx_ =  [-D, U]
+    visited = [0 for _ in range(F+1)]
+
+    def bfs(start):
+        visited[start] = 1
+        queue = deque([start])
+
+        while queue:
+            pop_node = queue.popleft()
+            for dx in dx_:
+                new_node = pop_node + dx
+                if 0 < new_node and new_node <= F and not visited[new_node]:
+                    
+                    if new_node == G:
+                        return visited[pop_node]
+                    
+                    visited[new_node] = visited[pop_node] + 1
+                    queue.append(new_node)
+        
+        return 0
+    
+    
+    rlt = bfs(S)
+    if not rlt:
+        print('use the stairs')
+    else:
+        print(rlt)
+
+except ValueError or IndexError as e:
+    print(e)             
+'''
+
+# 그림
+'''https://www.acmicpc.net/problem/1926'''
+
+from collections import deque
+import sys
+
+try:
+    n, m = map(int, sys.stdin.readline().split(' '))
+
+    graph_ = [list(map(int, sys.stdin.readline().split(' '))) for _ in range(n)]
+
+    visited = [[0 for _ in range(m)] for __ in range(n)]
+
+    queue = deque()
+
+    dx_dy = [(-1,0),(1,0),(0,1),(0,-1)]
+
+    def bfs(x,y):
+        queue.append((x,y))
+        graph_[y][x] = 0
+        size_ = 0
+
+        while queue:
+            u, v = queue.popleft()
+            size_ += 1
+            for dx, dy in dx_dy:
+                new_x, new_y = u+dx, v+dy
+                if 0 <= new_x and new_x < m and 0 <= new_y and new_y < n:
+                    if graph_[new_y][new_x]:
+                        graph_[new_y][new_x] = 0
+                        queue.append((new_x,new_y))
+        return size_
+    
+    cnt = 0
+    max_size = 0
+    for y in range(n):
+        for x in range(m):
+            if graph_[y][x]:
+                cnt += 1
+                max_size = max(max_size, bfs(x,y))
+    
+    print(cnt)
+    print(max_size)
 
 
-
+except ValueError or IndexError as e:
+    print(e)
 
 
 

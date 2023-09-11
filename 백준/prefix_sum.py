@@ -178,3 +178,72 @@ try:
 except ValueError or IndexError:
     print('Input Error')
 
+
+
+# 전구 상태 뒤집기
+'''https://www.acmicpc.net/problem/25634'''
+
+import sys
+try:
+    N = int(sys.stdin.readline())
+    list_a = list(map(int, sys.stdin.readline().split(" ")))
+    list_b = list(map(int, sys.stdin.readline().split(" ")))
+
+    index_ = 0
+    start_ = list_b[0]
+
+    ########### 전구가 다 켜진 경우 ##########
+    if len(list_b) == sum(list_b):
+        print(sum(list_a) - min(list_a))
+        sys.exit()
+    #########################################
+
+    
+    ####### [0,1,1,0,0,1] => [0,1,0,1] #######
+    rlt = 0 # 켜진 전구의 밝기 : 현재 밝기
+    sum_ = 0
+    for i , a_i in enumerate(list_a):
+        if list_b[i]:
+            rlt += a_i
+
+        if start_ == list_b[i]:
+            sum_ += a_i
+        else:
+            list_a[index_], list_b[index_] = sum_, start_
+            sum_ = a_i
+            start_ = (start_ + 1) % 2
+            index_ += 1
+     
+    list_a[index_], list_b[index_] = sum_, start_
+    list_a = list_a[:index_+1]
+    list_b = list_b[:index_+1]
+    ##########################################
+    
+    # 중간 결과 확인
+    print(list_a)
+    print(list_b)
+
+    prefix_0 = []
+    prefix_1 = []
+
+    sum_0, sum_1 = 0,0
+    max_ = 0
+    for idx, a_idx in enumerate(list_a):
+        if list_b[idx]:
+            sum_1 += a_idx
+            prefix_1.append(sum_1)
+        else:
+            max_ = max(max_,a_idx)
+            sum_0 += a_idx
+            prefix_0.append(sum_0)
+    
+    for i in range(1,len(prefix_0)):
+        for k in range(len(prefix_0)):
+            max_ = max(prefix_0[i])
+
+
+
+    print(rlt+max_)
+    
+except ValueError or IndexError as e:
+    print(e)

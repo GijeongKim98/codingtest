@@ -390,8 +390,8 @@ try:
         while rlt % 10 == 0:
             rlt //= 10
         if (i-1) % 5 == 0:
-            rlt %= 1000000
-        # print(f'{i}! =  {rlt}')
+            rlt %= 100000
+        print(f'{i}! =  {rlt}')
     rlt %= 100000
     rlt = str(rlt)
     len_= len(rlt)
@@ -406,7 +406,7 @@ except ValueError as e:
 '''
 # 제곱근 작도
 '''https://www.acmicpc.net/problem/5389'''
-
+'''
 try:
     test_case = int(input())
     for t in range(test_case):
@@ -427,9 +427,99 @@ try:
             print('IMPOSSIBLE')
 except ValueError as e:
     print(e)
+'''
+
+# 경비원
+'''https://www.acmicpc.net/problem/2564'''
+'''
+import sys
+try:
+    n,m = map(int,sys.stdin.readline().split(' '))
+    k = int(sys.stdin.readline())
+
+    line = []
+
+    for _ in range(k+1):
+        a, b = map(int, sys.stdin.readline().split(' '))
+        if a == 1:
+            line.append(b)
+        elif a == 2:
+            line.append(2*n+m - b)
+        elif a == 3:
+            line.append(2*(n+m) - b)
+        else:
+            line.append(n + b)
+
+    rlt = 0
+    x = line[-1]
+    max_ = (m+n) * 2
+
+    for point in line[:-1]:
+        dis = abs(point-x)
+        rlt += (dis if dis < max_-dis else max_-dis )
+
+    print(rlt)
+except ValueError or IndexError as e:
+    print(e)
+
+'''
 
 
 
+# 전구 상태 뒤집기
+'''https://www.acmicpc.net/problem/25634'''
 
+import sys
+try:
+    N = int(sys.stdin.readline())
+    list_a = list(map(int, sys.stdin.readline().split(" ")))
+    list_b = list(map(int, sys.stdin.readline().split(" ")))
+
+    index_ = 0
+    start_ = list_b[0]
+
+    if len(list_b) == sum(list_b):
+        print(sum(list_a) - min(list_a))
+        sys.exit()
+
+    sum_ = 0
+    for i , a_i in enumerate(list_a):
+        if start_ == list_b[i]:
+            sum_ += a_i
+        else:
+            list_a[index_], list_b[index_] = sum_, start_
+            sum_ = a_i
+            start_ = (start_ + 1) % 2
+            index_ += 1 
+    list_a[index_], list_b[index_] = sum_, start_
+    
+    list_a = list_a[:index_+1]
+    list_b = list_b[:index_+1]
+
+
+
+    start_ = list_b[0]
+    end_ = index_-1 if list_b[-1] else index_
+
+    if start_:
+        rlt = sum(list_a[start_-1::2])
+    else:
+        rlt = sum(list_a[start_+1::2])
+    
+    # print(start_, end_)
+    # print(list_a)
+    max_ = 0
+    for i in range(start_,end_+1,2):
+        for j in range(i,end_+1,2):
+            max_ = max(max_, sum(list_a[i:j+1:2]) - sum(list_a[i+1:j:2]))
+            # print(i, j, max_)
+    
+    print(rlt + max_)
+
+    # print(list_a)
+    # print(list_b)
+
+except ValueError or IndexError as e:
+    print(e)
 
 

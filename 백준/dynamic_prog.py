@@ -974,7 +974,7 @@ except ValueError:
 
 # Four Squares
 '''https://www.acmicpc.net/problem/17626'''
-
+'''
 try:
     # Input
     N = int(input())
@@ -1007,7 +1007,198 @@ try:
 except ValueError or IndexError as e:
     print(e)
 
+'''
+
+# 점프
+'''https://www.acmicpc.net/problem/1890'''
+'''
+import sys
+try:
+    N = int(sys.stdin.readline())
+    graph_ = [list(map(int,sys.stdin.readline().split(' '))) for _ in range(N)]
+
+    dp_ = [[0]*N for _ in range(N)]
+
+    dp_[0][0] = 1
+
+    for y in range(N):
+        for x in range(N):
+            if dp_[y][x] == 0:
+                continue
+
+            jump_num = graph_[y][x]
+            if not jump_num:
+                break
+
+            if x + jump_num < N:
+                dp_[y][x+jump_num] += dp_[y][x]
+            if y + jump_num < N:
+                dp_[y+jump_num][x] += dp_[y][x]
+
+            # for l in dp_:
+            #     print(l)
+            # print('\n\n')
+    print(dp_[-1][-1])
+
+except ValueError or IndexError as e:
+    print(e)
+'''
+
+# 암호코드
+'''https://www.acmicpc.net/problem/2011'''
+'''
+try:
+    numbers = list(map(int,list(input())))
+
+    # print(numbers)
+
+    pre_, now_ = 0, 1
+
+    rlt = []
+    product_ = 1
+    
+    for idx, x in enumerate(numbers):
+        if not x:
+            rlt.append((pre_ if numbers[idx-1] < 3 else 0))
+            pre_, now_ = 0, 1
+        else:
+            pre_, now_ = now_, (now_+pre_ if x+numbers[idx-1]*10 <= 26 else now_)
+            now_ = now_ % 1000000
+
+    for a in rlt:
+        product_ = (product_ * a) % 1000000
+
+    product_ = (product_ * now_) % 1000000
+
+    print(product_)
+
+except ValueError or IndexError as e:
+    print(e)
+'''
+
+# 전구 상태 뒤집기
+'''https://www.acmicpc.net/problem/25634'''
+'''
+import sys
+try:
+    N = int(sys.stdin.readline())
+    list_a = list(map(int, sys.stdin.readline().split(" ")))
+    list_b = list(map(int, sys.stdin.readline().split(" ")))
+
+    index_ = 0
+    start_ = list_b[0]
+
+    ########### 전구가 다 켜진 경우 ##########
+    if len(list_b) == sum(list_b):
+        print(sum(list_a) - min(list_a))
+        sys.exit()
+    #########################################
+
+    
+    ####### [0,1,1,0,0,1] => [0,1,0,1] #######
+    rlt = 0 # 켜진 전구의 밝기 : 현재 밝기
+    sum_ = 0
+    for i , a_i in enumerate(list_a):
+        if list_b[i]:
+            rlt += a_i
+
+        if start_ == list_b[i]:
+            sum_ += a_i
+        else:
+            list_a[index_], list_b[index_] = sum_, start_
+            sum_ = a_i
+            start_ = (start_ + 1) % 2
+            index_ += 1
+     
+    list_a[index_], list_b[index_] = sum_, start_
+    list_a = list_a[:index_+1]
+    list_b = list_b[:index_+1]
+    ##########################################
+    
+    # 중간 결과 확인
+    print(list_a)
+    print(list_b)
+
+    # 0이 시작하는 값
+    start_0_index = list_b[0]
+
+    # 꺼진 전구의 개수
+    if len(list_b) % 2 == 0:
+        count = len(list_b) // 2
+    else:
+        count = len(list_b) // 2 + (start_0_index + 1) % 2
+
+    # dp
+    dp = [[0] * count for _ in range(count)]
+
+
+    max_ = 0
+    for i in range(count):
+        dp[i][i] = list_a[i*2+start_0_index]
+        max_ = max(max_,dp[i][i])
+    
+    for i in range(1,count):
+        for k in range(count - i):
+            dp[k][i+k] = dp[k][i+k-1] + dp[k+1][i+k] -list_a[2*k+i+start_0_index]
+            max_ = max(max_, dp[k][i+k])
+    
+    # for dp_l in dp:
+    #     print(dp_l)
+
+    print(rlt+max_)
+    
+except ValueError or IndexError as e:
+    print(e)
+'''
+
+
+# 어드벤쳐게임
+'''https://www.acmicpc.net/problem/2310'''
+
+import sys
+
+try:
+    while True:
+        n = int(sys.stdin.readline())
+        if not n:
+            break
+        graph = dict()
+        dp_arr = [-1] * (n+1)
+        alpha_cost = [None]
+
+        for i in range(1,n+1):
+            input_list = sys.stdin.readline().split(' ')
+            alpha_cost.append((input_list[0], int(input_list[1])))
+            graph[i] = list(map(int, input_list[2:-1]))
+
+
+        k = 0
+        dp_arr[1] = alpha_cost[1][1]
+        
+        # print(graph)
+
+        for i in range(1, n+1):
+            for room_ in graph[i]:
+                alpha_, cost_ = alpha_cost[room_]
+                if alpha_ == 'E':
+                    dp_arr[room_] = max(dp_arr[room_], dp_arr[i])
+                elif alpha_ == 'L':
+                    dp_arr[room_] = max(dp_arr[room_], dp_arr[i], cost_)
+                else:
+                    dp_arr[room_] = max(dp_arr[room_], dp_arr[i] - cost_)
+
+                if room_ == n and dp_arr[room_] >= 0:
+                    k = 1
+                    break
+            if k:
+                break
+        
+        if dp_arr[n] >= 0:
+            print('Yes')
+        else:
+            print('No')
 
 
 
-
+except ValueError or IndexError as e:
+    print(e)

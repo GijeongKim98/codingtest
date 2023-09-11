@@ -170,132 +170,146 @@ else:
     print('입력 오류')
 
 '''
-# 고양이 출력
-str1 = '\\    /\\'
-str2 = ' )  ( \')'
-str3 = '(  /  )'
-str4 = ' \\(__)|'
+# # 고양이 출력
+# str1 = '\\    /\\'
+# str2 = ' )  ( \')'
+# str3 = '(  /  )'
+# str4 = ' \\(__)|'
 
-print(str1)
-print(str2)
-print(str3)
-print(str4)
+# print(str1)
+# print(str2)
+# print(str3)
+# print(str4)
 
-# 강아지 출력
-# |\_/|
-# |q p|   /}
-# ( 0 )"""\
-# |"^"`    |
-# ||_/=\\__|
+# # 강아지 출력
+# # |\_/|
+# # |q p|   /}
+# # ( 0 )"""\
+# # |"^"`    |
+# # ||_/=\\__|
 
-print('|\\_/|')
-print('|q p|   /}')
-print('( 0 )\"\"\"\\')
-print('|\"^\"`    |')
-print('||_/=\\\\__|')
+# print('|\\_/|')
+# print('|q p|   /}')
+# print('( 0 )\"\"\"\\')
+# print('|\"^\"`    |')
+# print('||_/=\\\\__|')
 
-print('\n\n\n\n\n\n')
+# print('\n\n\n\n\n\n')
 
-# 새싹 출력
-#          ,r'"7
-# r`-_   ,'  ,/
-#  \. ". L_r'
-#    `~\/
-#       |
-#       |
-print('         ,r\'\"7')
-print('r`-_   ,\'  ,/')
-print(' \\. \". L_r\'')
-print('   `~\\/')
-print('      |')
-print('      |')
-
-
-# 음계
-'''https://www.acmicpc.net/problem/2920'''
-
-import sys
-try:
-    numbers = list(map(int, sys.stdin.readline().split(' ')))
-
-    def is_ascending():
-        for i in range(8):
-            if i + 1 != numbers[i]:
-                return False
-        return True
-    def is_descending():
-        for j in range(8):
-            if 8 - j != numbers[j]:
-                return False
-        return True
-
-    if is_ascending():
-        print('ascending')
-    elif is_descending():
-        print('descending')
-    else:
-        print('mixed')
-except ValueError or IndexError:
-    print('Input Error')
-
-# 검증수
-'''https://www.acmicpc.net/problem/2475'''
-
-import sys
-try:
-    numbers = list(map(int, sys.stdin.readline().split(' ')))
-    sq_num = list(map(lambda x : (x**2 % 10), numbers))
-    rlt = 0
-    for sq in sq_num:
-        rlt = (rlt+sq) % 10
-
-    print(rlt)
-except ValueError or IndexError:
-    print('Input Error')
-
-# N 찍기
-'''https://www.acmicpc.net/problem/2741'''
-
-import sys
-try:
-    n = int(sys.stdin.readline())
-    for i in range(1,n+1):
-        print(i)
-except ValueError:
-    print('Input Error')
-
-# 기찍 N
-'''https://www.acmicpc.net/problem/2742'''
-
-import sys
-try:
-    n = int(sys.stdin.readline())
-    for i in range(n,0,-1):
-        print(i)
-except ValueError:
-    print('Input Error')
-
-# 펜린드롭수
-'''https://www.acmicpc.net/problem/1259'''
-
-import sys
-try:
-    while True:
-        numbers = sys.stdin.readline()
-        if numbers == '0':
-            break
-        len_ = len(numbers) - 1
-        c = 0
-        for i in range(len(numbers)//2):
-            if numbers[i] != numbers[len_-i]:
-                c = 1
-                break
-        if c == 1:
-            print('no')
-        else:
-            print('yes')
-except ValueError or IndexError:
-    print('error')
+# # 새싹 출력
+# #          ,r'"7
+# # r`-_   ,'  ,/
+# #  \. ". L_r'
+# #    `~\/
+# #       |
+# #       |
+# print('         ,r\'\"7')
+# print('r`-_   ,\'  ,/')
+# print(' \\. \". L_r\'')
+# print('   `~\\/')
+# print('      |')
+# print('      |')
 
 
+# # 음계
+# '''https://www.acmicpc.net/problem/2920'''
 
+# import sys
+# try:
+#     numbers = list(map(int, sys.stdin.readline().split(' ')))
+
+#     def is_ascending():
+#         for i in range(8):
+#             if i + 1 != numbers[i]:
+#                 return False
+#         return True
+#     def is_descending():
+#         for j in range(8):
+#             if 8 - j != numbers[j]:
+#                 return False
+#         return True
+
+#     if is_ascending():
+#         print('ascending')
+#     elif is_descending():
+#         print('descending')
+#     else:
+#         print('mixed')
+# except ValueError or IndexError:
+#     print('Input Error')
+
+# # 검증수
+# '''https://www.acmicpc.net/problem/2475'''
+
+# import sys
+# try:
+#     numbers = list(map(int, sys.stdin.readline().split(' ')))
+#     sq_num = list(map(lambda x : (x**2 % 10), numbers))
+#     rlt = 0
+#     for sq in sq_num:
+#         rlt = (rlt+sq) % 10
+
+#     print(rlt)
+# except ValueError or IndexError:
+#     print('Input Error')
+
+# # N 찍기
+# '''https://www.acmicpc.net/problem/2741'''
+
+# import sys
+# try:
+#     n = int(sys.stdin.readline())
+#     for i in range(1,n+1):
+#         print(i)
+# except ValueError:
+#     print('Input Error')
+
+# # 기찍 N
+# '''https://www.acmicpc.net/problem/2742'''
+
+# import sys
+# try:
+#     n = int(sys.stdin.readline())
+#     for i in range(n,0,-1):
+#         print(i)
+# except ValueError:
+#     print('Input Error')
+
+# # 펜린드롭수
+# '''https://www.acmicpc.net/problem/1259'''
+
+# import sys
+# try:
+#     while True:
+#         numbers = sys.stdin.readline()
+#         if numbers == '0':
+#             break
+#         len_ = len(numbers) - 1
+#         c = 0
+#         for i in range(len(numbers)//2):
+#             if numbers[i] != numbers[len_-i]:
+#                 c = 1
+#                 break
+#         if c == 1:
+#             print('no')
+#         else:
+#             print('yes')
+# except ValueError or IndexError:
+#     print('error')
+
+import time
+
+s = time.time()
+a = []
+for i in range(100000):
+    a.append(i)
+
+# for i in range(100000):
+#     k = i
+#     q = k
+    
+
+for i in a:
+    q = i
+
+print(time.time() - s) 
