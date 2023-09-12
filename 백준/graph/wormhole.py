@@ -91,8 +91,6 @@ def bellman_ford(graph, s, N, distances):
     
     for _ in range(N-1):
         for node in graph.keys():
-            if distances[node] == INF:
-                continue
             for ne_node, t in graph[node]:
                 distances[ne_node] = min(distances[ne_node], distances[node] + t)
             
