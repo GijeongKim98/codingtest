@@ -4,13 +4,13 @@
 import sys
 sys.setrecursionlimit(10**8)
 
-def bfs(node):
+def dfs(node):
     max_length = 0
     furthest_node = node
     visited[node] = 1
     for connected_node, weight in graph[node]:
         if not visited[connected_node]:    
-            length, f_node = bfs(connected_node)
+            length, f_node = dfs(connected_node)
             length += weight
             if max_length < length:
                 furthest_node = f_node
@@ -31,9 +31,9 @@ try:
     
     max_length = 0
     visited = [0 for _ in range(V+1)]
-    l1, n1 = bfs(1)
+    l1, n1 = dfs(1)
     visited = [0 for _ in range(V+1)]
-    l2, n2 = bfs(n1)
+    l2, n2 = dfs(n1)
     
     print(l2)
     
