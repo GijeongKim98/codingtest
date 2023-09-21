@@ -24,6 +24,9 @@ try:
                 
     
     for row in dist:
+        for i in range(n):
+            if row[i] == INF:
+                row[i] = 0
         print(*row)
     
     
