@@ -32,7 +32,7 @@ if __name__ == "__main__":
             for idx, number in enumerate(number_list):
                 numbers[idx].append(number)
         
-        dicts = [dict(), dict()]
+        # dicts = [dict(), dict()]
         sum_ab = []
         sum_cd = dict()
         
