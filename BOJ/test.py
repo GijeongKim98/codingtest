@@ -1,4 +1,4 @@
 
-l = [1,2,3,4]
+a = list(map(int,input().split(" ")))
 
-print(l.index(4))
+print(sum(a))
